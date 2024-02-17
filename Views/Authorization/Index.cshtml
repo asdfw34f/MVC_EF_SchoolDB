@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewData["Title"] = "Авторизация";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data" asp-controller="Authorization" asp-action="Index">
+        <ul>
+            <li>
+            </li>
+            <label for="username">
+                Введите логин
+            </label>
+
+            <li>
+                <input type="text" name="username" value="" placeholder="Username or Email" required />
+            </li>
+            <li>
+                <label for="password">
+                    Введите пароль
+                </label>
+            </li>
+            <li>
+                <input type="password" name="password" value="" placeholder="Password" required />
+            </li>
+            <li>
+                <label>
+                    <input type="checkbox" name="isStudent" id="isStudent" />
+                    Я студент
+                </label>
+
+            </li>
+            <li>
+                <input class="btn" type="submit" name="commit" value="Войти" />
+            </li>
+            <hr />
+            @ViewBag.username
+        </ul>
+    </form>
+</div>

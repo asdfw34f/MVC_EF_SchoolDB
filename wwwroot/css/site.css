@@ -1,0 +1,90 @@
+:root {
+    --color-cold-grey: #E1F2F7;
+    --color-purpure: #EF0D50;
+    --color-lite-white: #EB3A70;
+    --color-purpure-grey: #E5BACE;
+}
+
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    width: 100%;
+    height:80%;
+    background-color:var(--color-cold-grey)
+}
+
+.container {
+    display:  grid;
+    text-align: center;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    top:5%;
+    left:2%;
+    height: 100%;
+    width: 100%;
+    position:absolute;
+}
+
+input {
+    font-size:20px;
+    background-color: var( --color-purpure);
+    font-style: revert-layer;
+    color:white;
+    border:  inherit;
+    border-radius:15px;
+    padding: 4px 12px;
+}
+label{
+    margin-top:15px;
+}
+p{
+    text-align:center;
+    margin:0px;
+}
+span{
+    margin:0px;
+}
+
+ul {
+    font-size: 28px;
+    list-style-type: none;
+}
+
+.btn {
+    margin-top: 30px;
+    appearance: button;
+    border: 0;
+    border-radius: 8px;
+    background: var( --color-purpure);
+    color: #fff;
+    padding: 4px 12px;
+}
+
+    .btn:hover {
+        background: var( --color-purpure-grey);
+        padding:6px 20px;
+    }
+
+    .btn:focus {
+        outline: none;
+        box-shadow: 0 0 0 0#cbd6ee;
+    }

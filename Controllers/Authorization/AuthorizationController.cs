@@ -43,7 +43,7 @@ namespace SchoolTestsApp.Controllers.Authorization
             }
             else
             {
-                var issuccess = _studentLogin.AuthenticateStudent(username, password);
+                var issuccess = _studentLogin.AuthenticateStudent(username, password); 
                 if (issuccess.Result != null)
                 {
                     ViewBag.username = string.Format("Successfully logged-in", username);

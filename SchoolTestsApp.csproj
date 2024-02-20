@@ -18,4 +18,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Students\Marks\" />
+    <Folder Include="Views\Students\Tests\" />
+    <Folder Include="Views\Teachers\Classes\" />
+    <Folder Include="Views\Teachers\Tests\" />
+  </ItemGroup>
+
 </Project>

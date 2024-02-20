@@ -1,35 +1,23 @@
 ﻿
 @{
     ViewData["Title"] = "Авторизация";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Authorization/Layout/_LayoutAuthorization.cshtml";
 }
 
-<div class="container">
-    <form method="post" enctype="multipart/form-data" asp-controller="Authorization" asp-action="Index">
+<div>
+    <form class="container" method="post" enctype="multipart/form-data" asp-controller="Authorization" asp-action="Index">
         <ul>
             <li>
-            </li>
-            <label for="username">
-                Введите логин
-            </label>
-
-            <li>
-                <input type="text" name="username" value="" placeholder="Username or Email" required />
+                <input type="text" name="username" value="" placeholder="Введите логин" required />
             </li>
             <li>
-                <label for="password">
-                    Введите пароль
-                </label>
-            </li>
-            <li>
-                <input type="password" name="password" value="" placeholder="Password" required />
+                <input type="password" name="password" value="" placeholder="Введите пароль" required />
             </li>
             <li>
                 <label>
                     <input type="checkbox" name="isStudent" id="isStudent" />
                     я школьник
                 </label>
-
             </li>
             <li>
                 <input class="btn" type="submit" name="commit" value="Войти" />

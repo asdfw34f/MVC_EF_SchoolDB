@@ -10,11 +10,11 @@ namespace SchoolTestsApp.Controllers.Authorization
         private readonly Repository.LoginStudent.ILogin _studentLogin;
         private readonly Repository.LoginTeacher.ILogin _teacherLogin;
 
-        public AuthorizationController(ApplicationContext context, Repository.LoginStudent.ILogin student, Repository.LoginTeacher.ILogin teacher)
+        public AuthorizationController(ApplicationContext context)
         {
             this.context = context;
-            _studentLogin = student;
-            _teacherLogin = teacher;
+            _studentLogin = new Repository.LoginStudent.AuthenticateLogin(context);
+            _teacherLogin = new Repository.LoginTeacher.AuthenticateLogin(context);
         }
 
         public IActionResult Index()
@@ -32,7 +32,8 @@ namespace SchoolTestsApp.Controllers.Authorization
                 {
                     ViewBag.username = string.Format("Successfully logged-in", username);
                     TempData["username"] = "Ahmed";
-                    return RedirectToAction("Index", "Layout");
+                    return View();
+                    //return RedirectToAction("Index", "Layout");
                 }
                 else
                 {

@@ -14,10 +14,21 @@ namespace SchoolTestsApp.Models.DB
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-            Database.EnsureDeleted();
+         //   Database.EnsureDeleted();
             Database.EnsureCreated();
 
 
+
+            Teachers.Add(new Teacher()
+            {
+                Login = "123",
+                Password = "321",
+                Birthday = new DateOnly(),
+                Name = "Daniil",
+                SecondName = "Demekhin",
+                ThridName = "Valentinovish"
+            });
+            SaveChanges();  
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,6 +54,7 @@ namespace SchoolTestsApp.Models.DB
                 .WithMany(t => t.Classes)
                 .HasForeignKey(c => c.TeacherId)
                 .HasPrincipalKey(t => t.id);
+
             });
 
 

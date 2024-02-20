@@ -1,8 +1,10 @@
-﻿namespace SchoolTestsApp.Models.DB.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SchoolTestsApp.Models.DB.Entities
 {
     public class HistoryTests
     {
-        public int id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int id { get; set; }
         public int StudentId { get; set; }
         public int TestID { get; set; }
         public int Mark { get; set; }

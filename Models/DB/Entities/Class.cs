@@ -1,8 +1,10 @@
-﻿namespace SchoolTestsApp.Models.DB.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace SchoolTestsApp.Models.DB.Entities
 {
     public class Class
     {
-        public int id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] public int id { get; set; }
         public string? ClassCode { get; set; }
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set;}

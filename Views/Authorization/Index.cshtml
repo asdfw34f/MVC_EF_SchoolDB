@@ -5,7 +5,11 @@
 }
 
 <div>
-    <form class="container" method="post" enctype="multipart/form-data" asp-controller="Authorization" asp-action="Index">
+    <form method="post" enctype="multipart/form-data" asp-controller="Authorization" asp-action="Index">
+
+        <h2>
+            Вход в учётную запись
+        </h2>
         <ul>
             <li>
                 <input type="text" name="username" value="" placeholder="Введите логин" required />
@@ -14,11 +18,14 @@
                 <input type="password" name="password" value="" placeholder="Введите пароль" required />
             </li>
             <li>
-                <label>
-                    <input type="checkbox" name="isStudent" id="isStudent" />
-                    я школьник
-                </label>
-            </li>
+                <div>
+
+                    <label>
+                        <input type="checkbox" name="isStudent" id="isStudent" />
+                        я школьник
+                    </label>
+
+                </div> </li>
             <li>
                 <input class="btn" type="submit" name="commit" value="Войти" />
             </li>

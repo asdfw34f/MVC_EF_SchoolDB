@@ -21,7 +21,6 @@
   <ItemGroup>
     <Folder Include="Views\Students\Marks\" />
     <Folder Include="Views\Students\Tests\" />
-    <Folder Include="Views\Teachers\Classes\" />
   </ItemGroup>
 
   <ItemGroup>

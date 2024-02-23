@@ -22,7 +22,7 @@ html {
 html {
     background: var(--color-cold-grey);
     position: absolute;
-    top: 50%;
+    top: 35%;
     left: 45%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -30,23 +30,12 @@ html {
 }
 
 body {
-    background: var(--color-cold-grey);
+    background: var( --color-purpure-grey);
     margin-bottom: 60px;
     width: 100%;
     height: 80%;
-}
-
-.container {
-    display: grid;
-    text-align: center;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: center;
-    top: 5%;
-    left: 2%;
-    height: 100%;
-    width: 100%;
-    position: absolute;
+    border-radius:20px;
+    padding: 25px;
 }
 
 input {
@@ -58,9 +47,9 @@ input {
     border-radius: 15px;
     padding: 4px 12px;
     margin-top: 20px;
-    display:flex;
-    width:100%;
 }
+
+
 
 ::placeholder {
     color: whitesmoke;
@@ -95,7 +84,6 @@ ul {
     color: #fff;
     font-weight: 600;
     padding: 4px 12px;
-    width:auto;
 }
 
     .btn:hover {
@@ -109,8 +97,15 @@ ul {
         outline: none;
         box-shadow: 0 0 0 0#cbd6ee;
     }
+
     select{
         background-color: var(--color-purpure);
         border-radius:15px;
         color: var(--color-cold-grey);
+        display:flex;
+        width:100%;
+    }
+
+    h2{
+        margin-bottom:25px;
     }

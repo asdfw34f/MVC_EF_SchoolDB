@@ -16,19 +16,22 @@ namespace SchoolTestsApp.Models.DB
         {
          //   Database.EnsureDeleted();
             Database.EnsureCreated();
+            /*
+                         var classes = new List<Class>
+{
+                new Class(){ClassCode="9А", TeacherId=context.Teachers.First().id},
+                new Class(){ClassCode="9Б", TeacherId=context.Teachers.First().id},
+                new Class(){ClassCode="9В", TeacherId=context.Teachers.First().id},
+                new Class(){ClassCode="8А", TeacherId=context.Teachers.First().id},
+            };
 
-
-
-            Teachers.Add(new Teacher()
+            foreach (var c in classes)
             {
-                Login = "123",
-                Password = "321",
-                Birthday = new DateOnly(),
-                Name = "Daniil",
-                SecondName = "Demekhin",
-                ThridName = "Valentinovish"
-            });
-            SaveChanges();  
+                context.Classes.Add(c);
+            }
+
+            context.SaveChanges();
+             */
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -81,6 +84,8 @@ namespace SchoolTestsApp.Models.DB
                 .HasPrincipalKey(t => t.id);
             });
 
+
+   
         }
     }
 }

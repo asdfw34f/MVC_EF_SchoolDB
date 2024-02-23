@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AccountLibrary.Serviece;
+using Microsoft.AspNetCore.Mvc;
 using SchoolTestsApp.Models.DB;
+using SchoolTestsApp.Models.DB.Entities;
 
 namespace SchoolTestsApp.Controllers.Authorization
 {
@@ -32,8 +34,15 @@ namespace SchoolTestsApp.Controllers.Authorization
                 {
                     ViewBag.username = string.Format("Successfully logged-in", username);
                     TempData["username"] = "Ahmed";
-                    return View();
-                    //return RedirectToAction("Index", "Layout");
+
+                    Manager.Init(
+                                   issuccess.Result.Name,
+                                   issuccess.Result.SecondName,
+                                   issuccess.Result.id);
+
+                    return RedirectToRoute("default", new { controller = "Tests", action = "Index" });
+                   // return View();
+
                 }
                 else
                 {
@@ -43,7 +52,7 @@ namespace SchoolTestsApp.Controllers.Authorization
             }
             else
             {
-                var issuccess = _studentLogin.AuthenticateStudent(username, password); 
+                var issuccess = _studentLogin.AuthenticateStudent(username, password);
                 if (issuccess.Result != null)
                 {
                     ViewBag.username = string.Format("Successfully logged-in", username);

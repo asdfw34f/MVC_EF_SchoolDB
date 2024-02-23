@@ -22,7 +22,10 @@
     <Folder Include="Views\Students\Marks\" />
     <Folder Include="Views\Students\Tests\" />
     <Folder Include="Views\Teachers\Classes\" />
-    <Folder Include="Views\Teachers\Tests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AccountLibrary\AccountLibrary.csproj" />
   </ItemGroup>
 
 </Project>

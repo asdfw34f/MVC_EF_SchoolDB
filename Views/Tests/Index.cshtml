@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    List<SelectListItem> classes = ViewBag.Classes;
+}
+<div>
+    <form asp-controller="Tests" asp-action="Index" method="post">
+        <ul>
+            <li>
+                @Html.DropDownList("classesItems", classes, "Выберите класс")
+            </li>
+            <li>
+                <input type="file" name="file" placeholder=".docx файл теста" required/>
+            </li>
+            <li>
+                <input type="text" name="title" value="" placeholder="Название"/>
+            </li>
+            <li>
+                <input class="btn" type="submit" value="Отправить тест" action="Send"/>
+            </li>
+            <li>
+                @ViewBag.FileDone
+            </li>
+
+        </ul>
+</form>
+</div>

@@ -8,9 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(connection));
 
-builder.Services.AddScoped<SchoolTestsApp.Repository.LoginStudent.ILogin, SchoolTestsApp.Repository.LoginStudent.AuthenticateLogin>();
-builder.Services.AddScoped<SchoolTestsApp.Repository.LoginTeacher.ILogin, SchoolTestsApp.Repository.LoginTeacher.AuthenticateLogin>();
-
+builder.Services.AddScoped<SchoolTestsApp.Repository.Authentication.ILogin, SchoolTestsApp.Repository.Authentication.Login>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

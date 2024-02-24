@@ -5,23 +5,23 @@ using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.Repository.TeacherClass;
 
-namespace SchoolTestsApp.Controllers.Teachers.Tests
+namespace SchoolTestsApp.Controllers.Teachers
 {
-    public class TestsController : Controller
+    public class TeacherController : Controller
     {
-        private readonly ILogger<TestsController> _logger;
+        private readonly ILogger<TeacherController> _logger;
 
         ApplicationContext context;
 
-        public TestsController(ApplicationContext context, ILogger<TestsController> logger)
+        public TeacherController(ApplicationContext context, ILogger<TeacherController> logger)
         {
 
             _logger = logger;
             this.context = context;
 
         }
-        
-        public IActionResult Index()
+
+        public IActionResult AddTest()
         {
             var classes = new List<SelectListItem>();
             var classesRes = TeacherClasses.GetClasses(
@@ -44,10 +44,10 @@ namespace SchoolTestsApp.Controllers.Teachers.Tests
         }
 
         [HttpPost]
-        public IActionResult Send(byte[] file, string classId, string title) 
+        public IActionResult AddTest(byte[] file, string classId, string title)
         {
             context.Tests.Add(
-                new Models.DB.Entities.Test()
+                new Test()
                 {
                     Title = title,
                     Class = Convert.ToInt32(classId),

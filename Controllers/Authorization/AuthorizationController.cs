@@ -9,14 +9,12 @@ namespace SchoolTestsApp.Controllers.Authorization
     {
         private ApplicationContext context;
 
-        private readonly Repository.LoginStudent.ILogin _studentLogin;
-        private readonly Repository.LoginTeacher.ILogin _teacherLogin;
+        private readonly Repository.Authentication.ILogin _Login;
 
         public AuthorizationController(ApplicationContext context)
         {
             this.context = context;
-            _studentLogin = new Repository.LoginStudent.AuthenticateLogin(context);
-            _teacherLogin = new Repository.LoginTeacher.AuthenticateLogin(context);
+            _Login = new Repository.Authentication.Login(context);
         }
 
         public IActionResult Index()
@@ -25,46 +23,32 @@ namespace SchoolTestsApp.Controllers.Authorization
         }
 
         [HttpPost]
-        public IActionResult Index(string username, string password, bool isStudent)
+        public IActionResult Index(string username, string password)
         {
-            if (!isStudent)
+
+            var issuccess = _Login.Authectication(username, password);
+            if (issuccess.Result)
             {
-                var issuccess = _teacherLogin.AuthenticateTeacher(username, password);
-                if (issuccess.Result != null)
+                ViewBag.username = string.Format("Successfully logged-in", username);
+                TempData["username"] = "Ahmed";
+                if (!Manager.GetType())
                 {
-                    ViewBag.username = string.Format("Successfully logged-in", username);
-                    TempData["username"] = "Ahmed";
-
-                    Manager.Init(
-                                   issuccess.Result.Name,
-                                   issuccess.Result.SecondName,
-                                   issuccess.Result.id);
-
-                    return RedirectToRoute("default", new { controller = "Tests", action = "Index" });
-                   // return View();
+                    return RedirectToRoute("default", new { controller = "Teacher", action = "AddTest" });
 
                 }
                 else
                 {
-                    ViewBag.username = string.Format("Login Failed ", username);
-                    return View();
+                    // return student view
+
                 }
             }
             else
             {
-                var issuccess = _studentLogin.AuthenticateStudent(username, password);
-                if (issuccess.Result != null)
-                {
-                    ViewBag.username = string.Format("Successfully logged-in", username);
-                    TempData["username"] = "Ahmed";
-                    return RedirectToAction("Index", "Layout");
-                }
-                else
-                {
                     ViewBag.username = string.Format("Login Failed ", username);
                     return View();
-                }
             }
+            ViewBag.username = string.Format("Login Failed ", username);
+            return View();
         }
     }
 }

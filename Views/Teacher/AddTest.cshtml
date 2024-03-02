@@ -7,27 +7,33 @@
     Layout = "~/Views/_LayoutTeacher.cshtml";
 }
 <div>
+    <div class="for-form">
     <form asp-controller="Tests" asp-action="AddTest" method="post" enctype="multipart/form-data">
-        <h2>
+        <h4>
             Добавление теста
-        </h2>
+        </h4>
         <ul>
+           
             <li>
-                @Html.DropDownList("classesItems", classes, "Выберите класс")
-            </li>
-            <li>
-                <div class="main-choice">
+                <div class="file-container">
 
                     <label class="input-file">
                         <input type="file" name="file" placeholder=".docx файл теста" required />
                         <span class="input-file-btn">Выберите файл</span>
-                        <span class="input-file-text">Максимум 10мб</span>
+                        <span class="input-file-text">Максимум 10МБ</span>
                     </label>
 
                 </div>            </li>
-            <li>
+           <li>
+               <ul>
+                   <li>
+                        @Html.DropDownList("classesItems", classes, "Выберите класс")
+                   </li>
+                   <li>
+                        <input class="input-title-test" type="text" name="title" value="" placeholder="Название" />
+                   </li>
+               </ul>
 
-                <input type="text" name="title" value="" placeholder="Название" />
             </li>
             <li>
                 <input class="btn" type="submit" value="Отправить тест" action="AddTest" />
@@ -38,4 +44,5 @@
 
         </ul>
     </form>
+    </div
 </div>

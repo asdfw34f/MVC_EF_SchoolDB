@@ -22,48 +22,33 @@
             <ul class="nav sidebar-nav">
                 <div class="sidebar-header">
                     <div class="sidebar-brand">
-                        <a href="#">Brand</a>
+                        <a href="#">Школа №1</a>
                     </div>
                 </div>
                 <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#events">Events</a></li>
-                <li><a href="#team">Team</a></li>
-                <li class="dropdown">
-                    <a href="#works" class="dropdown-toggle" data-toggle="dropdown">Works <span class="caret"></span></a>
-                    <ul class="dropdown-menu animated fadeInLeft" role="menu">
-                        <div class="dropdown-header">Dropdown heading</div>
-                        <li><a href="#pictures">Pictures</a></li>
-                        <li><a href="#videos">Videeos</a></li>
-                        <li><a href="#books">Books</a></li>
-                        <li><a href="#art">Art</a></li>
-                        <li><a href="#awards">Awards</a></li>
-                    </ul>
-                </li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#followme">Follow me</a></li>
+                <li><a href="#team">Личный кабинет</a></li>
+                <li><a href="#events">События</a></li>
+                <li><a href="#contact">Контакты</a></li>
+                <li><a href="#followme">Новостм</a></li>
             </ul>
         </nav>
         <!-- /#sidebar-wrapper -->
         <!-- Page Content -->
+        
         <div id="page-content-wrapper">
             <button type="button" class="hamburger animated fadeInLeft is-closed" data-toggle="offcanvas">
                 <span class="hamb-top"></span>
                 <span class="hamb-middle"></span>
                 <span class="hamb-bottom"></span>
             </button>
-            <div class="container">
-               
+            <div class="main">
+                @RenderBody()
             </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-        <div class="main">
-            @RenderBody()
         </div>
     </div>
     <!-- /#wrapper -->
-
+    
+    <!-- /#page-content-wrapper -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

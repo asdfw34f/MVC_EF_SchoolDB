@@ -17,23 +17,26 @@ namespace SchoolTestsApp.Controllers.Authorization
             _Login = new Repository.Authentication.Login(context);
         }
 
+
+        [Route("/login")]
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
+        [Route("/login")]
         public IActionResult Index(string username, string password)
         {
 
-            var issuccess = _Login.Authectication(username, password);
+            var issuccess = _Login.Authectication(username, password, HttpContext);
             if (issuccess.Result)
             {
                 ViewBag.username = string.Format("Successfully logged-in", username);
                 TempData["username"] = "Ahmed";
                 if (!Manager.GetType())
                 {
-                    return RedirectToRoute("default", new { controller = "Teacher", action = "AddTest" });
+                    return Redirect("/");
 
                 }
                 else

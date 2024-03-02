@@ -3,16 +3,18 @@ using SchoolTestsApp.Models.DB;
 using AccountLibrary.Model;
 using Microsoft.EntityFrameworkCore;
 using AccountLibrary.Serviece;
-
+using SchoolTestsApp.AuthenticationModule.LoginCookie;
 namespace SchoolTestsApp.Repository.Authentication
 {
     public class Login : ILogin
     {
         private readonly ApplicationContext context;
+        private readonly IAuthentication _authentication;
 
         public Login(ApplicationContext context)
         {
             this.context = context;
+            _authentication = new AuthenticationModule.LoginCookie.Authentication();
         }
         
         public async Task<Student> AuthenticateStudent(string username, string password)
@@ -28,16 +30,19 @@ namespace SchoolTestsApp.Repository.Authentication
         }
 
       
-        public async Task<bool> Authectication(string username, string password)
+        public async Task<bool> Authectication(string username, string password, HttpContext httpContext)
         {
             var s = AuthenticateStudent(username, password);
             if (s.Result != null)
             {
                 Manager.Init(
-                                   s.Result.Name,
-                                   s.Result.SecondName,
+                                   s.Result.Login,
+                                   s.Result.Password,
                                    s.Result.id,
                                    true);
+
+                await _authentication.Log_In(username, password, httpContext);
+
                 return true;
             }
             else 
@@ -46,10 +51,11 @@ namespace SchoolTestsApp.Repository.Authentication
                 if (t.Result != null)
                 {
                     Manager.Init(
-                                   t.Result.Name,
-                                   t.Result.SecondName,
+                                   t.Result.Login,
+                                   t.Result.Password,
                                    t.Result.id,
                                    false);
+                    await _authentication.Log_In(username, password, httpContext);
                     return true;
                 }
             }

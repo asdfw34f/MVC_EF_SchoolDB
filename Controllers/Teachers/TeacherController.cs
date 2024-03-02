@@ -1,4 +1,6 @@
 ﻿using AccountLibrary.Serviece;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolTestsApp.Models.DB;
@@ -10,21 +12,31 @@ namespace SchoolTestsApp.Controllers.Teachers
     public class TeacherController : Controller
     {
         private readonly ILogger<TeacherController> _logger;
-
+        Teacher self;
         ApplicationContext context;
+
+        List<SelectListItem> classes;
+        List<Class?> classesRes;
 
         public TeacherController(ApplicationContext context, ILogger<TeacherController> logger)
         {
-
-            _logger = logger;
             this.context = context;
 
-        }
+            _logger = logger;
 
-        public IActionResult AddTest()
-        {
-            var classes = new List<SelectListItem>();
-            var classesRes = TeacherClasses.GetClasses(
+            if (!Manager.isAuthenticated)
+            {
+                Redirect("/logout");
+            }
+            else
+            {
+                self = context.Teachers.Single(t => t.id == Manager.GetId());
+            }
+
+
+
+            classes = new List<SelectListItem>();
+            classesRes = TeacherClasses.GetClasses(
                 context, Manager.GetId());
 
             if (classesRes.Count() > 0)
@@ -38,12 +50,33 @@ namespace SchoolTestsApp.Controllers.Teachers
                     });
                 }
             }
+        }
 
+        #region аккаунт
+        [Route("/account")]
+        [Authorize]
+        public IActionResult Index()
+        {
             ViewBag.Classes = classes;
-            return View();
+
+            return View("Index", self);
+        }
+
+        #endregion
+
+        #region добавление тестов
+
+        [Route("/")]
+        [Authorize]
+        public IActionResult AddTest()
+        {
+            ViewBag.Classes = classes;
+            return View("AddTest");
         }
 
         [HttpPost]
+        [Route("/")]
+        [Authorize]
         public IActionResult AddTest(byte[] file, string classId, string title)
         {
             context.Tests.Add(
@@ -58,5 +91,6 @@ namespace SchoolTestsApp.Controllers.Teachers
             ViewBag.FileDone = "Тест успешно отправлен";
             return View();
         }
+        #endregion
     }
 }

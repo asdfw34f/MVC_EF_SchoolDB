@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolTestsApp", "SchoolTes
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConvertFileLibrary", "..\ConvertFileLibrary\ConvertFileLibrary.csproj", "{F7DAADF2-AF6C-4227-B15F-F0C8ACDAD124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccountLibrary", "..\AccountLibrary\AccountLibrary.csproj", "{3A36F502-1AE6-4332-9474-EEF1FB553710}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountLibrary", "..\AccountLibrary\AccountLibrary.csproj", "{3A36F502-1AE6-4332-9474-EEF1FB553710}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

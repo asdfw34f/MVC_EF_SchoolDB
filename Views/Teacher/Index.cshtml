@@ -1,5 +1,37 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model SchoolTestsApp.Models.DB.Entities.Teacher
 @{
+
+    ViewData["Title"] = "Профиль";
+    List<SelectListItem> classes = ViewBag.Classes;
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
+
+<div>
+    <h4 class="names">@Model.SecondName @Model.Name </h4>
+    @if (Model.ThridName != null)
+    {
+        <h4 class="names">
+            @Model.ThridName
+        </h4>
+    }
+    <div>
+        <ul>
+            <li>
+                <label>Ваши классы</label>
+                <div>
+                    <ul class="horizontal">
+                        @foreach (var cs in Model.Classes)
+                        {
+                            <li><a>@cs.ClassCode</a></li>
+                        }
+                    </ul>
+                </div>
+                <div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

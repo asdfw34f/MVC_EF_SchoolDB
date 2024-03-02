@@ -160,6 +160,25 @@ ul {
     width: 100%;
 }
 
+.horizontal li {
+    display: inline; /* Отображать как строчный элемент */
+    margin-right: 3px; /* Отступ слева */
+    border: 2px solid #000; /* Рамка вокруг текста */
+    border-radius: 10px;
+    padding: 5px; /* Поля вокруг текста */
+    background-color: #0f4591;
+    color: whitesmoke;
+}
+
+    .horizontal li a {
+        font-size:20px;
+        color: whitesmoke;
+    }
+
+    .names{
+        margin:0;
+    }
+
 li {
     padding: 1% 1%;
     width: 90%;

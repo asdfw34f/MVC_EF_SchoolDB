@@ -1,10 +1,10 @@
 ﻿using AccountLibrary.Serviece;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
+using SchoolTestsApp.Repository.FilesManage;
 using SchoolTestsApp.Repository.TeacherClass;
 
 namespace SchoolTestsApp.Controllers.Teachers
@@ -15,10 +15,11 @@ namespace SchoolTestsApp.Controllers.Teachers
         Teacher self;
         ApplicationContext context;
 
-        List<SelectListItem> classes;
-        List<Class?> classesRes;
+        private IFileManger _fileManger;
+        SelectList classes;
+        List<Class>? classesRes;
 
-        public TeacherController(ApplicationContext context, ILogger<TeacherController> logger)
+        public TeacherController(ApplicationContext context, ILogger<TeacherController> logger, IFileManger fileManger)
         {
             this.context = context;
 
@@ -33,23 +34,28 @@ namespace SchoolTestsApp.Controllers.Teachers
                 self = context.Teachers.Single(t => t.id == Manager.GetId());
             }
 
+            _fileManger = fileManger;
 
-
-            classes = new List<SelectListItem>();
             classesRes = TeacherClasses.GetClasses(
                 context, Manager.GetId());
-
-            if (classesRes.Count() > 0)
+            if (classesRes != null)
             {
-                foreach (var c in classesRes)
-                {
-                    classes.Add(new SelectListItem()
-                    {
-                        Text = c.ClassCode,
-                        Value = c.id.ToString()
-                    });
-                }
+                classes = new SelectList(classesRes, "Id", "ClassCode");
             }
+            ViewData["Classes"] = classes;
+            /*
+        if (classesRes.Count() > 0)
+        {
+            foreach (var c in classesRes)
+            {
+                classes.Add(new SelectListItem()
+                {
+                    Text = c.ClassCode,
+                    Value = c.id.ToString()
+                });
+            }
+        }*/
+
         }
 
         #region аккаунт
@@ -57,7 +63,6 @@ namespace SchoolTestsApp.Controllers.Teachers
         [Authorize]
         public IActionResult Index()
         {
-            ViewBag.Classes = classes;
 
             return View("Index", self);
         }
@@ -70,26 +75,40 @@ namespace SchoolTestsApp.Controllers.Teachers
         [Authorize]
         public IActionResult AddTest()
         {
-            ViewBag.Classes = classes;
+            ViewBag.ClassId = classes;
             return View("AddTest");
         }
 
-        [HttpPost]
         [Route("/")]
+        [HttpPost]
         [Authorize]
-        public IActionResult AddTest(byte[] file, string classId, string title)
+        public IActionResult PostTest(IFormFile file, string classId, string title)
         {
-            context.Tests.Add(
-                new Test()
+            
+            try{
+                if (file != null && file.Length > 0)
                 {
-                    Title = title,
-                    Class = Convert.ToInt32(classId),
-                    TestFile = file
+
+                    if (_fileManger.WriteToDatabase(file, title, classId, context).Result)
+                    {
+                        ViewBag.FileDone = "Тест успешно отправлен";
+                    }
+                    else
+                    {
+                        ViewBag.FileDone = "Тест не отправлен.\n Server error";
+                    }
+                    return View("AddTest");
                 }
-                );
-            context.SaveChanges();
-            ViewBag.FileDone = "Тест успешно отправлен";
-            return View();
+                else
+                {
+                    return BadRequest("Необходимо выбрать файл для загрузки.");
+                }
+            }
+            catch(Exception ex)
+            {
+                ViewBag.FileDone = $"{ex.Message}";
+                return View("AddText");
+            }
         }
         #endregion
     }

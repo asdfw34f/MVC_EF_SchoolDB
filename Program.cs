@@ -4,6 +4,7 @@ using SchoolTestsApp.Repository;
 using SchoolTestsApp.Models.DB.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using SchoolTestsApp.Repository.FilesManage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServe
 
 builder.Services.AddScoped<SchoolTestsApp.Repository.Authentication.ILogin, SchoolTestsApp.Repository.Authentication.Login>();
 builder.Services.AddScoped<SchoolTestsApp.AuthenticationModule.LoginCookie.IAuthentication, SchoolTestsApp.AuthenticationModule.LoginCookie.Authentication>();
+builder.Services.AddScoped<IFileManger, FileManager>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options => options.LoginPath = "/login");
@@ -55,6 +57,10 @@ app.UseStaticFiles();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Authorization}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "/",
+    pattern: "{controller=Teacher}/{action=AddFile}/{id?}"
+    );
 
 app.MapGet("/logout", async (HttpContext context) =>
 {

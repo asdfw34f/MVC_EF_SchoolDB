@@ -17,21 +17,39 @@ namespace SchoolTestsApp.Models.DB
          //   Database.EnsureDeleted();
             Database.EnsureCreated();
             /*
-                         var classes = new List<Class>
-{
-                new Class(){ClassCode="9А", TeacherId=context.Teachers.First().id},
-                new Class(){ClassCode="9Б", TeacherId=context.Teachers.First().id},
-                new Class(){ClassCode="9В", TeacherId=context.Teachers.First().id},
-                new Class(){ClassCode="8А", TeacherId=context.Teachers.First().id},
-            };
+            Students.AddRange(new List<Student>
+                {
+                new Student {
+                    Birthday=DateOnly.Parse("12.12.2000"),
+                    Name = "Ivan",
+                    SecondName = "Stepanov",
+                    ThridName = "Maximovich",
+                    ClassId = 1,
+                    Login = "s1",
+                    Password="ps1"
+                    
+                },
+                new Student {
+                    Birthday=DateOnly.Parse("02.01.2001"),
+                    Name = "Petr",
+                    SecondName = "Ivanov",
+                    ThridName = "Nikitovich",
+                    ClassId = 2,
+                    Login = "s2",
+                    Password="ps2"
+                },
+                new Student {
+                    Birthday=DateOnly.Parse("10.11.2001"),
+                    Name = "Anastasia",
+                    SecondName = "Minornaya",
+                    ThridName = "Nikitovna",
+                    ClassId = 1,
+                    Login = "s3",
+                    Password="ps3"
+                }
+            });
+            SaveChanges();*/
 
-            foreach (var c in classes)
-            {
-                context.Classes.Add(c);
-            }
-
-            context.SaveChanges();
-             */
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -43,12 +61,10 @@ namespace SchoolTestsApp.Models.DB
                 e.HasKey(k => k.id);
             });
 
-
             modelBuilder.Entity<Teacher>(e =>
             {
                 e.HasKey(k => k.id);
             });
-
 
             modelBuilder.Entity<Class>(e =>
             {
@@ -57,9 +73,7 @@ namespace SchoolTestsApp.Models.DB
                 .WithMany(t => t.Classes)
                 .HasForeignKey(c => c.TeacherId)
                 .HasPrincipalKey(t => t.id);
-
             });
-
 
             modelBuilder.Entity<Student>(e =>
             {
@@ -69,7 +83,6 @@ namespace SchoolTestsApp.Models.DB
                 .HasForeignKey(s => s.ClassId)
                 .HasPrincipalKey(c => c.id);
             });
-
 
             modelBuilder.Entity<HistoryTests>(e =>
             {
@@ -83,9 +96,6 @@ namespace SchoolTestsApp.Models.DB
                 .HasForeignKey(h => h.TestID)
                 .HasPrincipalKey(t => t.id);
             });
-
-
-   
         }
     }
 }

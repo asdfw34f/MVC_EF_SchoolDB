@@ -3,17 +3,16 @@
 *@
 @{
     ViewData["Title"] = "Добаление теста";
-    List<SelectListItem> classes = ViewBag.Classes;
+ //   var classes = ViewBag.ClassId;
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
 <div>
     <div class="for-form">
-    <form asp-controller="Tests" asp-action="AddTest" method="post" enctype="multipart/form-data">
         <h4>
             Добавление теста
         </h4>
+    <form asp-controller="Teacher" asp-action="PostTest" method="post" enctype="multipart/form-data">
         <ul>
-           
             <li>
                 <div class="file-container">
 
@@ -27,16 +26,16 @@
            <li>
                <ul>
                    <li>
-                        @Html.DropDownList("classesItems", classes, "Выберите класс")
+                        @Html.DropDownList("classId", ViewData["Classes"] as SelectList, "Выберите класс")
                    </li>
                    <li>
-                        <input class="input-title-test" type="text" name="title" value="" placeholder="Название" />
+                        <input class="input-title-test" type="text" name="title" value="" placeholder="Название" required/>
                    </li>
                </ul>
 
             </li>
             <li>
-                <input class="btn" type="submit" value="Отправить тест" action="AddTest" />
+                <input class="btn" type="submit" value="Отправить тест" action="PostTest" />
             </li>
             <li>
                 @ViewBag.FileDone

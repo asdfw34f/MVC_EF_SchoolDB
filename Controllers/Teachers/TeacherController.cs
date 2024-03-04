@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
+using SchoolTestsApp.Models.DB.TestJson;
 using SchoolTestsApp.Repository.FilesManage;
 using SchoolTestsApp.ViewModels;
 
@@ -28,8 +29,6 @@ namespace SchoolTestsApp.Controllers.Teachers
             }
 
             self = context.Teachers.Single(t => t.id == Manager.GetId());
-            
-            
 
             _fileManger = fileManger;
         }
@@ -77,7 +76,7 @@ namespace SchoolTestsApp.Controllers.Teachers
         [Authorize]
         public IActionResult PostTest(IFormFile file, ClassViewModel viewModel, string title)
         {
-            try{
+            try {
                 if (file != null && file.Length > 0)
                 {
 
@@ -96,11 +95,38 @@ namespace SchoolTestsApp.Controllers.Teachers
                     return BadRequest("Необходимо выбрать файл для загрузки.");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.FileDone = $"{ex.Message}";
                 return View("AddText", GetClassViewModel());
             }
+        }
+        #endregion
+
+        #region create test
+        [Route("/create%%link")]
+        [Authorize]
+        public IActionResult LinkCreateTest()
+        {
+            return Redirect("/create");
+        }
+
+        [Route("/create")]
+        [Authorize]
+        public IActionResult CreateTest()
+        {
+            var model = new TestModel();
+            return View("CreateTest", model);
+        }
+
+        [Route("/create")]
+        [Authorize]
+        [HttpPost]
+        public IActionResult PostCreateTest(TestModel test)
+        {
+
+
+            return View();
         }
         #endregion
     }

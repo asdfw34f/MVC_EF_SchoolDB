@@ -1,0 +1,47 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<div>
+    <div>
+        <h4></h4>
+        <div >
+            <ul id ="textFieldsContainer">
+                <li>
+                    <input type="text" name="textField1" />
+                </li>
+            </ul>
+        </div>
+        <button onclick="addAnswer()">Добавить текстовое поле</button>
+
+        <script>
+            function addAnswer() {
+                var container = document.getElementById('textFieldsContainer');
+                var lastIndex = container.querySelectorAll('input').length + 1;
+
+                var answerField = document.createElement("input");
+                answerField.type = "text";
+                answerField.name = "answer" + lastIndex;
+
+                var answerCheck = document.createElement("input");
+                answerCheck.type = "checkbox";
+                answerCheck.checked;
+                answerCheck.name = "answerBool" + lastIndex;
+
+                var answerLabel = document.createElement("label");
+                answerLabel.textContent = "Правильный";
+
+                var liContainer = document.createElement("li");
+
+                liContainer.appendChild(answerField);
+                liContainer.appendChild(answerCheck);
+                liContainer.appendChild(answerLabel);
+
+                container.appendChild(liContainer);
+            }
+        </script>
+    </div>
+</div>

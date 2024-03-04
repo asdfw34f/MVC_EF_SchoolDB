@@ -5,7 +5,6 @@
 @{
 
     ViewData["Title"] = "Профиль";
-    List<SelectListItem> classes = ViewBag.Classes;
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
 
@@ -23,9 +22,12 @@
                 <label>Ваши классы</label>
                 <div>
                     <ul class="horizontal">
-                        @foreach (var cs in Model.Classes)
+                        @if (Model.Classes != null)
                         {
-                            <li><a>@cs.ClassCode</a></li>
+                            @foreach (var cs in Model.Classes)
+                            {
+                                <li><a>@cs.ClassCode</a></li>
+                            }
                         }
                     </ul>
                 </div>

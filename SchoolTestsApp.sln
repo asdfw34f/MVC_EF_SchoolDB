@@ -5,8 +5,6 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SchoolTestsApp", "SchoolTestsApp.csproj", "{C4ED5CFF-78D9-48D4-B501-B4D81873F8BC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConvertFileLibrary", "..\ConvertFileLibrary\ConvertFileLibrary.csproj", "{F7DAADF2-AF6C-4227-B15F-F0C8ACDAD124}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AccountLibrary", "..\AccountLibrary\AccountLibrary.csproj", "{3A36F502-1AE6-4332-9474-EEF1FB553710}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{C4ED5CFF-78D9-48D4-B501-B4D81873F8BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4ED5CFF-78D9-48D4-B501-B4D81873F8BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4ED5CFF-78D9-48D4-B501-B4D81873F8BC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F7DAADF2-AF6C-4227-B15F-F0C8ACDAD124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7DAADF2-AF6C-4227-B15F-F0C8ACDAD124}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7DAADF2-AF6C-4227-B15F-F0C8ACDAD124}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7DAADF2-AF6C-4227-B15F-F0C8ACDAD124}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A36F502-1AE6-4332-9474-EEF1FB553710}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A36F502-1AE6-4332-9474-EEF1FB553710}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A36F502-1AE6-4332-9474-EEF1FB553710}.Release|Any CPU.ActiveCfg = Release|Any CPU

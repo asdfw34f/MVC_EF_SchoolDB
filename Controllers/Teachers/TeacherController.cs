@@ -1,11 +1,10 @@
 ﻿using AccountLibrary.Serviece;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.Repository.FilesManage;
-using SchoolTestsApp.Repository.TeacherClass;
+using SchoolTestsApp.ViewModels;
 
 namespace SchoolTestsApp.Controllers.Teachers
 {
@@ -16,8 +15,6 @@ namespace SchoolTestsApp.Controllers.Teachers
         ApplicationContext context;
 
         private IFileManger _fileManger;
-        SelectList classes;
-        List<Class>? classesRes;
 
         public TeacherController(ApplicationContext context, ILogger<TeacherController> logger, IFileManger fileManger)
         {
@@ -29,41 +26,38 @@ namespace SchoolTestsApp.Controllers.Teachers
             {
                 Redirect("/logout");
             }
-            else
-            {
-                self = context.Teachers.Single(t => t.id == Manager.GetId());
-            }
+
+            self = context.Teachers.Single(t => t.id == Manager.GetId());
+            
+            
 
             _fileManger = fileManger;
+        }
 
-            classesRes = TeacherClasses.GetClasses(
-                context, Manager.GetId());
-            if (classesRes != null)
-            {
-                classes = new SelectList(classesRes, "Id", "ClassCode");
-            }
-            ViewData["Classes"] = classes;
-            /*
-        if (classesRes.Count() > 0)
+        #region Get VoewModels
+        private ClassViewModel GetClassViewModel()
         {
-            foreach (var c in classesRes)
+            ClassViewModel classViewModel = new ClassViewModel();
+            classViewModel.classes = new List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>();
+            var classes = context.Classes.Where(c => c.TeacherId == self.id).ToList();
+
+            foreach (var c in classes)
             {
-                classes.Add(new SelectListItem()
+                classViewModel.classes.Add(new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem()
                 {
                     Text = c.ClassCode,
                     Value = c.id.ToString()
                 });
             }
-        }*/
-
+            return classViewModel;
         }
+        #endregion
 
         #region аккаунт
         [Route("/account")]
         [Authorize]
         public IActionResult Index()
         {
-
             return View("Index", self);
         }
 
@@ -75,21 +69,19 @@ namespace SchoolTestsApp.Controllers.Teachers
         [Authorize]
         public IActionResult AddTest()
         {
-            ViewBag.ClassId = classes;
-            return View("AddTest");
+            return View("AddTest", GetClassViewModel());
         }
 
         [Route("/")]
         [HttpPost]
         [Authorize]
-        public IActionResult PostTest(IFormFile file, string classId, string title)
+        public IActionResult PostTest(IFormFile file, ClassViewModel viewModel, string title)
         {
-            
             try{
                 if (file != null && file.Length > 0)
                 {
 
-                    if (_fileManger.WriteToDatabase(file, title, classId, context).Result)
+                    if (_fileManger.WriteToDatabase(file, title, viewModel.classId.ToString(), context).Result)
                     {
                         ViewBag.FileDone = "Тест успешно отправлен";
                     }
@@ -97,7 +89,7 @@ namespace SchoolTestsApp.Controllers.Teachers
                     {
                         ViewBag.FileDone = "Тест не отправлен.\n Server error";
                     }
-                    return View("AddTest");
+                    return View("AddTest", GetClassViewModel());
                 }
                 else
                 {
@@ -107,7 +99,7 @@ namespace SchoolTestsApp.Controllers.Teachers
             catch(Exception ex)
             {
                 ViewBag.FileDone = $"{ex.Message}";
-                return View("AddText");
+                return View("AddText", GetClassViewModel());
             }
         }
         #endregion

@@ -1,11 +1,15 @@
-﻿@*
+﻿@using SchoolTestsApp.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model ClassViewModel
 @{
     ViewData["Title"] = "Добаление теста";
  //   var classes = ViewBag.ClassId;
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    
 }
+
 <div>
     <div class="for-form">
         <h4>
@@ -22,11 +26,14 @@
                         <span class="input-file-text">Максимум 10МБ</span>
                     </label>
 
-                </div>            </li>
+                </div>
+            </li>
            <li>
                <ul>
                    <li>
-                        @Html.DropDownList("classId", ViewData["Classes"] as SelectList, "Выберите класс")
+                <select asp-for="classId" asp-items="@Model.classes" >
+                    <option>Please select one</option>
+                </select>
                    </li>
                    <li>
                         <input class="input-title-test" type="text" name="title" value="" placeholder="Название" required/>

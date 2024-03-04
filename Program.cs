@@ -1,7 +1,5 @@
 using SchoolTestsApp.Models.DB;
 using Microsoft.EntityFrameworkCore;
-using SchoolTestsApp.Repository;
-using SchoolTestsApp.Models.DB.Entities;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using SchoolTestsApp.Repository.FilesManage;

@@ -1,5 +1,4 @@
-﻿using AccountLibrary.Model;
-using SchoolTestsApp.Models.DB.Entities;
+﻿using SchoolTestsApp.Models.DB.Entities;
 
 namespace SchoolTestsApp.Repository.Authentication
 {

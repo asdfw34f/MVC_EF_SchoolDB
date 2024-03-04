@@ -1,9 +1,9 @@
 ﻿using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.Models.DB;
-using AccountLibrary.Model;
 using Microsoft.EntityFrameworkCore;
 using AccountLibrary.Serviece;
 using SchoolTestsApp.AuthenticationModule.LoginCookie;
+
 namespace SchoolTestsApp.Repository.Authentication
 {
     public class Login : ILogin

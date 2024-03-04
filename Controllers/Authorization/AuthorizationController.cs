@@ -1,7 +1,6 @@
 ﻿using AccountLibrary.Serviece;
 using Microsoft.AspNetCore.Mvc;
 using SchoolTestsApp.Models.DB;
-using SchoolTestsApp.Models.DB.Entities;
 
 namespace SchoolTestsApp.Controllers.Authorization
 {

@@ -82,9 +82,9 @@ input {
             color: black;
         }
 
-        .input-title-test{
-            width:250px;
-        }
+.input-title-test {
+    width: 250px;
+}
 
 .input-file {
     margin: 0px;
@@ -152,6 +152,104 @@ input {
     background-color: #eee;
 }
 
+input-question-test {
+    font-size: 20px;
+    background-color: var(--color-backgr);
+    font-style: revert-layer;
+    border: 0;
+    border-radius: 10px;
+    padding: 1px 10px;
+    position: center;
+    border-color: whitesmoke;
+    font-weight: 400;
+}
+
+
+.checkbox-other {
+    font-size: 16px;
+    display: block;
+    margin: 10px 0 0 0;
+    line-height: 22px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+    .checkbox-other input[type=checkbox] {
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        display: block;
+        width: 0;
+        height: 0;
+    }
+
+    .checkbox-other span {
+        display: inline-block;
+        position: relative;
+        padding: 0 0 0 35px;
+        line-height: 22px;
+    }
+
+        .checkbox-other span:before {
+            content: "";
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            border: 1px solid #2B7335;
+            box-shadow: inset 0 0 3px #8a8a8a;
+        }
+
+    /* Checked */
+    .checkbox-other input[type=checkbox] + span:after {
+        content: "";
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .checkbox-other input[type=checkbox]:checked + span:after {
+        content: "✓";
+        color: green;
+        font-size: 30px;
+        font-weight: 900;
+        position: absolute;
+        left: 2px;
+        top: -2px;
+        opacity: 1;
+    }
+
+/* Focus */
+.focused span:before {
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Hover */
+.checkbox-other span:hover:after {
+    filter: brightness(110%);
+}
+
+/* Active */
+.checkbox-other span:active:before,
+.checkbox-other span:active:after {
+    filter: brightness(80%);
+}
+
+/* Disabled */
+.checkbox-other input[type=checkbox]:disabled + span {
+    color: #666;
+    cursor: default;
+}
+
+    .checkbox-other input[type=checkbox]:disabled + span:before,
+    .checkbox-other input[type=checkbox]:disabled + span:after {
+        filter: grayscale(100%);
+        opacity: 0.6;
+    }
+
+
 ul {
     list-style: none;
     display: list-item;
@@ -159,6 +257,22 @@ ul {
     position: center;
     width: 100%;
 }
+
+.ul-answers {
+    margin-top: 10px;
+}
+
+    .ul-answers li input {
+        font-size: 18px;
+        background-color: var(--color-elemental);
+        font-style: revert-layer;
+        border: 0;
+        border-radius: 10px;
+        padding: 1px 10px;
+        position: center;
+        border-color: whitesmoke;
+        font-weight: 400;
+    }
 
 .horizontal li {
     display: inline; /* Отображать как строчный элемент */
@@ -171,22 +285,24 @@ ul {
 }
 
     .horizontal li a {
-        font-size:20px;
+        font-size: 20px;
         color: whitesmoke;
     }
 
-    .names{
-        margin:0;
-    }
-.res{
-    color:black;
+.names {
+    margin: 0;
 }
+
+.res {
+    color: black;
+}
+
 li {
     padding: 1% 1%;
     width: 90%;
     height: 100%;
     margin: 1px;
-    margin-bottom:0.4rem;
+    margin-bottom: 0.4rem;
     position: center;
     justify-content: center;
 }
@@ -222,6 +338,55 @@ h2 {
         box-shadow: 0 0 0 0#cbd6ee;
     }
 
+.btn-add-answer {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    appearance: button;
+    border: 0;
+    border-radius: 20px;
+    background-color: #0f4591;
+    color: whitesmoke;
+    font-weight: 400;
+    font-size: 16px;
+    width: 200px;
+    padding: 2px 2px;
+}
+
+    .btn-add-answer:hover {
+        background-color: #d65f00;
+        color: whitesmoke;
+        font-weight: 400;
+    }
+
+    .btn-add-answer:focus {
+        outline: none;
+        box-shadow: 0 0 0 0#cbd6ee;
+    }
+
+.btn-add-question {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    appearance: button;
+    border: 0;
+    border-radius: 20px;
+    background-color: #0f4591;
+    color: whitesmoke;
+    font-weight: 400;
+    font-size: 16px;
+    width: 200px;
+    padding: 2px 2px;
+}
+
+    .btn-add-question:hover {
+        background-color: #d65f00;
+        color: whitesmoke;
+        font-weight: 400;
+    }
+
+    .btn-add-question:focus {
+        outline: none;
+        box-shadow: 0 0 0 0#cbd6ee;
+    }
 
 select {
     border: 0;

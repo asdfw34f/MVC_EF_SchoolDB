@@ -8,23 +8,31 @@
 <div>
     <div>
         <h4></h4>
-        <div >
-            <ul id ="textFieldsContainer">
+        <div>
+
+            <ul id="container-question">
                 <li>
-                    <input type="text" name="textField1" />
+                    <input class="input-question-test" type="text" name="question1" placeholder="Вопрос 1" required />
+                    <ul class="ul-answers" id="textFieldsContainer1">
+
+                    </ul>
+                    <button class="btn-add-answer" onclick="addAnswer('1')">Добавить ответ</button>
+
                 </li>
+
             </ul>
+            <button class="btn-add-question" onclick="addQuestion()">Добавить вопрос</button>
         </div>
-        <button onclick="addAnswer()">Добавить текстовое поле</button>
 
         <script>
-            function addAnswer() {
-                var container = document.getElementById('textFieldsContainer');
-                var lastIndex = container.querySelectorAll('input').length + 1;
+            function addAnswer(parameter) {
+                var container = document.getElementById('textFieldsContainer' + parameter);
+                var lastIndex = container.querySelectorAll('input[type="text"]').length + 1;
 
                 var answerField = document.createElement("input");
                 answerField.type = "text";
                 answerField.name = "answer" + lastIndex;
+                answerField.placeholder = "ответ " + lastIndex;
 
                 var answerCheck = document.createElement("input");
                 answerCheck.type = "checkbox";
@@ -32,15 +40,46 @@
                 answerCheck.name = "answerBool" + lastIndex;
 
                 var answerLabel = document.createElement("label");
-                answerLabel.textContent = "Правильный";
+                answerLabel.className = "checkbox-other";
 
                 var liContainer = document.createElement("li");
+                var myspan = document.createElement("span");
+                myspan.textContent = "правильный ответ";
+
+                answerLabel.appendChild(answerCheck);
+                answerLabel.appendChild(myspan);
 
                 liContainer.appendChild(answerField);
-                liContainer.appendChild(answerCheck);
+                liContainer.appendChild(document.createElement("br"));
                 liContainer.appendChild(answerLabel);
-
                 container.appendChild(liContainer);
+            }
+
+            function addQuestion() {
+                var container = document.getElementById("container-question");
+                var lastIndex = container.querySelectorAll('input[class="input-question-test"]').length + 1;
+                
+                var liContainer = document.createElement("li");
+                var questionField = document.createElement("input");
+                questionField.className = "input-question-test";
+                questionField.type = "text";
+                questionField.name = "question" + lastIndex;
+                questionField.placeholder = "Вопрос " + lastIndex;
+
+                var ulContainer = document.createElement("ul");
+                ulContainer.className = "ul-answers";
+                ulContainer.id = "textFieldsContainer" +lastIndex;
+
+                var btn = document.createElement("button");
+                btn.className = "btn-add-answer";
+                btn.textContent = "Добавить ответ";
+                btn.onclick = addAnswer(parameter: lastIndex ); 
+
+                liContainer.appendChild(questionField);
+                liContainer.appendChild(ulContainer);
+                liContainer.appendChild(btn);
+                container.appendChild(liContainer);
+                 
             }
         </script>
     </div>

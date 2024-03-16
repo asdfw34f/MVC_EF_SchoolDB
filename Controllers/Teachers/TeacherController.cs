@@ -1,6 +1,7 @@
 ﻿using AccountLibrary.Serviece;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SchoolTestsApp.Models;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.Models.DB.TestJson;
@@ -21,15 +22,15 @@ namespace SchoolTestsApp.Controllers.Teachers
         {
             this.context = context;
 
-            _logger = logger;
-
-            if (!Manager.isAuthenticated)
+            if ( !Manager.isAuthenticated)
             {
                 Redirect("/logout");
             }
 
-            self = context.Teachers.Single(t => t.id == Manager.GetId());
+            _logger = logger;
 
+            self = context.Teachers.Single(t => t.id == Manager.GetId());
+            
             _fileManger = fileManger;
         }
 
@@ -115,14 +116,17 @@ namespace SchoolTestsApp.Controllers.Teachers
         [Authorize]
         public IActionResult CreateTest()
         {
-            var model = new TestModel();
+            List<QuestionModel> model = new List<QuestionModel>() {new QuestionModel() };
+
+
+
             return View("CreateTest", model);
         }
 
         [Route("/create")]
         [Authorize]
         [HttpPost]
-        public IActionResult PostCreateTest(TestModel test)
+        public IActionResult PostCreateTest(QuestionModel test)
         {
 
 

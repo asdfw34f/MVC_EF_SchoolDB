@@ -8,7 +8,8 @@
 
 body {
     position: relative;
-    overflow-x: hidden;
+    overflow-x: scroll;
+    overflow-y: scroll;
     background-color: whitesmoke;
     display: blosk;
 }
@@ -25,7 +26,11 @@ img {
     width: 100px;
     background: none;
 }
-
+.contain-content {
+    width:100vw;
+    box-sizing: border-box;
+    overflow:scroll;
+}
 
 .nav .open > a,
 .nav .open > a:hover,
@@ -258,21 +263,19 @@ ul {
     width: 100%;
 }
 
-.ul-answers {
-    margin-top: 10px;
+.form-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-    .ul-answers li input {
-        font-size: 18px;
-        background-color: var(--color-elemental);
-        font-style: revert-layer;
-        border: 0;
-        border-radius: 10px;
-        padding: 1px 10px;
-        position: center;
-        border-color: whitesmoke;
-        font-weight: 400;
+    .form-group > * {
+        margin: 10px 0;
     }
+
+
+
 
 .horizontal li {
     display: inline; /* Отображать как строчный элемент */
@@ -338,7 +341,8 @@ h2 {
         box-shadow: 0 0 0 0#cbd6ee;
     }
 
-.btn-add-answer {
+
+.addAnswerToQuestion {
     margin-top: 15px;
     margin-bottom: 5px;
     appearance: button;
@@ -347,46 +351,20 @@ h2 {
     background-color: #0f4591;
     color: whitesmoke;
     font-weight: 400;
-    font-size: 16px;
     width: 200px;
     padding: 2px 2px;
 }
 
-    .btn-add-answer:hover {
-        background-color: #d65f00;
-        color: whitesmoke;
-        font-weight: 400;
-    }
-
-    .btn-add-answer:focus {
-        outline: none;
-        box-shadow: 0 0 0 0#cbd6ee;
-    }
-
-.btn-add-question {
-    margin-top: 15px;
-    margin-bottom: 5px;
-    appearance: button;
-    border: 0;
-    border-radius: 20px;
-    background-color: #0f4591;
+.addAnswerToQuestion:hover {
+    background-color: #d65f00;
     color: whitesmoke;
     font-weight: 400;
-    font-size: 16px;
-    width: 200px;
-    padding: 2px 2px;
 }
 
-    .btn-add-question:hover {
-        background-color: #d65f00;
-        color: whitesmoke;
-        font-weight: 400;
-    }
-
-    .btn-add-question:focus {
-        outline: none;
-        box-shadow: 0 0 0 0#cbd6ee;
-    }
+.addAnswerToQuestion:focus {
+    outline: none;
+    box-shadow: 0 0 0 0#cbd6ee;
+}
 
 select {
     border: 0;

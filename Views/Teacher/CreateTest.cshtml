@@ -4,83 +4,49 @@
 @{
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
-
-<div>
-    <div>
-        <h4></h4>
-        <div>
-
-            <ul id="container-question">
-                <li>
-                    <input class="input-question-test" type="text" name="question1" placeholder="Вопрос 1" required />
-                    <ul class="ul-answers" id="textFieldsContainer1">
-
-                    </ul>
-                    <button class="btn-add-answer" onclick="addAnswer('1')">Добавить ответ</button>
-
-                </li>
-
-            </ul>
-            <button class="btn-add-question" onclick="addQuestion()">Добавить вопрос</button>
-        </div>
-
-        <script>
-            function addAnswer(parameter) {
-                var container = document.getElementById('textFieldsContainer' + parameter);
-                var lastIndex = container.querySelectorAll('input[type="text"]').length + 1;
-
-                var answerField = document.createElement("input");
-                answerField.type = "text";
-                answerField.name = "answer" + lastIndex;
-                answerField.placeholder = "ответ " + lastIndex;
-
-                var answerCheck = document.createElement("input");
-                answerCheck.type = "checkbox";
-                answerCheck.checked;
-                answerCheck.name = "answerBool" + lastIndex;
-
-                var answerLabel = document.createElement("label");
-                answerLabel.className = "checkbox-other";
-
-                var liContainer = document.createElement("li");
-                var myspan = document.createElement("span");
-                myspan.textContent = "правильный ответ";
-
-                answerLabel.appendChild(answerCheck);
-                answerLabel.appendChild(myspan);
-
-                liContainer.appendChild(answerField);
-                liContainer.appendChild(document.createElement("br"));
-                liContainer.appendChild(answerLabel);
-                container.appendChild(liContainer);
-            }
-
-            function addQuestion() {
-                var container = document.getElementById("container-question");
-                var lastIndex = container.querySelectorAll('input[class="input-question-test"]').length + 1;
-                
-                var liContainer = document.createElement("li");
-                var questionField = document.createElement("input");
-                questionField.className = "input-question-test";
-                questionField.type = "text";
-                questionField.name = "question" + lastIndex;
-                questionField.placeholder = "Вопрос " + lastIndex;
-
-                var ulContainer = document.createElement("ul");
-                ulContainer.className = "ul-answers";
-                ulContainer.id = "textFieldsContainer" +lastIndex;
-
-                var btn = document.createElement("button");
-                btn.className = "btn-add-answer";
-                btn.textContent = "Добавить ответ";
-                btn.onclick = addAnswer(parameter: lastIndex ); 
-
-                liContainer.appendChild(questionField);
-                liContainer.appendChild(ulContainer);
-                liContainer.appendChild(btn);
-                container.appendChild(liContainer);
-                 
-            }
-        </script>
+@model List<QuestionModel>
+<div class="contain-content">
+<form asp-action="Create">
+    <div class="form-group" id="form-group">
     </div>
+    <ul>
+        <li>
+            <button class="btn" type="button" id="addQuestion">Add a Question</button>
+        </li>
+        <li>
+            <input type="submit" />
+        </li>
+    </ul>
+</form>
 </div>
+
+@section Scripts {
+    <script>
+        var answerIndex = 0;
+        var questionIndex = 0;
+
+        $('#addAnswer').click(function () {
+            const cont = document.getElementById('q['+questionIndex+']')
+
+            var answerField = '<input type="text" name="Answers[' + questionIndex + '].Answer' + answerIndex + '" />';
+            answerIndex++;
+            $(cont).appendTo(answerField);
+        });
+
+        $('#addQuestion').click(function () {
+            const cont = document.getElementById("form-group")
+            var questionField = '<div id="q['+questionIndex+']"> <label>Вопрос</label> ' +
+                ' <input type="text" name="Questions[' + questionIndex + '].Question" /> </div> ' +
+                '<button type="button" class="addAnswerToQuestion">Add an Answer</button>';
+            questionIndex++;
+
+            $(cont).append(questionField);
+        });
+
+        $(document).on('click', '.addAnswerToQuestion', function () {
+            var answerField = '<input type="text" name="Answers[' + (questionIndex - 1) + '].Answer' + answerIndex + '" />';
+            answerIndex++;
+            $(this).before(answerField);
+        });
+    </script>
+}

@@ -63,6 +63,10 @@ app.MapControllerRoute(
 app.MapGet("/logout", async (HttpContext context) =>
 {
     await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+    
+    context.Response.Cookies.Delete("username");
+    context.Response.Cookies.Delete("password");
+
     return Results.Redirect("/login");
 });
 

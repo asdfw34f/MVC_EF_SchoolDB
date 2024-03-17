@@ -1,10 +1,9 @@
-﻿using AccountLibrary.Serviece;
+﻿
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SchoolTestsApp.Models;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
-using SchoolTestsApp.Models.DB.TestJson;
 using SchoolTestsApp.Repository.FilesManage;
 using SchoolTestsApp.ViewModels;
 
@@ -21,17 +20,14 @@ namespace SchoolTestsApp.Controllers.Teachers
         public TeacherController(ApplicationContext context, ILogger<TeacherController> logger, IFileManger fileManger)
         {
             this.context = context;
+            _logger = logger;
+            _fileManger = fileManger;
 
-            if ( !Manager.isAuthenticated)
+            if (!(AuthenticationModule.Account.isAuthenticated()) || AuthenticationModule.Account.GetID() == null)
             {
                 Redirect("/logout");
             }
-
-            _logger = logger;
-
-            self = context.Teachers.Single(t => t.id == Manager.GetId());
-            
-            _fileManger = fileManger;
+                self = context.Teachers.Single(t => t.id == AuthenticationModule.Account.GetID());
         }
 
         #region Get VoewModels

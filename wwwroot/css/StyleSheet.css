@@ -63,7 +63,17 @@ input {
     border-color: whitesmoke;
     font-weight: 400;
 }
-
+.input-answer {
+    font-size: 18px;
+    color: black;
+}
+.input-answer::placeholder {
+    color: black;
+}
+p,
+label {
+    font: 1rem 'Fira Sans', sans-serif;
+}
     input:hover {
         background: #abb3ff;
         border: 0;

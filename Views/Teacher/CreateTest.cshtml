@@ -24,19 +24,20 @@
     <script>
         var answerIndex = 0;
         var questionIndex = 0;
+        const cont = document.getElementById("form-group")
 
-        $('#addAnswer').click(function () {
+     /*   $('#addAnswer').click(function () {
             const cont = document.getElementById('q['+questionIndex+']')
 
-            var answerField = '<input type="text" name="Answers[' + questionIndex + '].Answer' + answerIndex + '" />';
+            var answerField = '<div> <input type="checkbox" id="isRight[' + questionIndex + '][' + answerIndex + ']" name="scales" checked /> <label for="scales"> Scales </label> </div><input class="input-answer" type = "text" name = "Answers[' + questionIndex + '].Answer' + answerIndex + '" /> ';
+            
             answerIndex++;
-            $(cont).appendTo(answerField);
+            $(cont).append(answerField);
         });
-
+        */
         $('#addQuestion').click(function () {
-            const cont = document.getElementById("form-group")
             var questionField = '<div id="q['+questionIndex+']"> <label>Вопрос</label> ' +
-                ' <input type="text" name="Questions[' + questionIndex + '].Question" /> </div> ' +
+                ' <input type="text" name="Questions" /> </div> ' +
                 '<button type="button" class="addAnswerToQuestion">Add an Answer</button>';
             questionIndex++;
 
@@ -44,9 +45,9 @@
         });
 
         $(document).on('click', '.addAnswerToQuestion', function () {
-            var answerField = '<input type="text" name="Answers[' + (questionIndex - 1) + '].Answer' + answerIndex + '" />';
+            var answerField = '<div> <input type="checkbox" id="Questions[' + questionIndex + '].Answers[' + answerIndex + '].isRight" name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].isRight" checked /> <label for="Questions[' + questionIndex + '].Answers[' + answerIndex + '].isRight">это ответ</label> </div><input class="input-answer" type = "text" name = "Question[' + questionIndex + '].Answers['+answerIndex+'].Answer' + answerIndex + '" /> ';
             answerIndex++;
-            $(this).before(answerField);
+            $(cont).append(answerField);
         });
     </script>
 }

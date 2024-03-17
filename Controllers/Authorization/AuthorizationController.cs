@@ -1,5 +1,4 @@
-﻿using AccountLibrary.Serviece;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SchoolTestsApp.Models.DB;
 
 namespace SchoolTestsApp.Controllers.Authorization
@@ -33,15 +32,13 @@ namespace SchoolTestsApp.Controllers.Authorization
             {
                 ViewBag.username = string.Format("Successfully logged-in", username);
                 TempData["username"] = "Ahmed";
-                if (!Manager.GetType())
+                if (!AuthenticationModule.Account.isStudent())
                 {
                     return Redirect("/");
-
                 }
                 else
                 {
                     // return student view
-
                 }
             }
             else

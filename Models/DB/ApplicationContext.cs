@@ -50,6 +50,19 @@ namespace SchoolTestsApp.Models.DB
             });
             SaveChanges();*/
 
+
+            Teachers.AddRange(
+                new Teacher()
+                {
+                    Name = "Daniil",
+                    SecondName = "Demekhin",
+                    ThridName = "Valentinovich",
+                    Birthday = DateOnly.FromDateTime(new DateTime(2000, 10, 13)),
+                    Login="123",
+                    Password="321",
+                });
+            SaveChanges();
+
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

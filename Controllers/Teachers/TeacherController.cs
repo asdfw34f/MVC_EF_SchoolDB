@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using SchoolTestsApp.Models;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
+using SchoolTestsApp.Models.Serialize;
 using SchoolTestsApp.Repository.FilesManage;
 using SchoolTestsApp.ViewModels;
+using QuestionModel = SchoolTestsApp.Models.Serialize.QuestionModel;
 
 namespace SchoolTestsApp.Controllers.Teachers
 {
@@ -112,10 +114,8 @@ namespace SchoolTestsApp.Controllers.Teachers
         [Authorize]
         public IActionResult CreateTest()
         {
-            List<QuestionModel> model = new List<QuestionModel>() {new QuestionModel() };
-
-
-
+            TestModel model = new TestModel();
+            
             return View("CreateTest", model);
         }
 
@@ -124,8 +124,6 @@ namespace SchoolTestsApp.Controllers.Teachers
         [HttpPost]
         public IActionResult PostCreateTest(QuestionModel test)
         {
-
-
             return View();
         }
         #endregion

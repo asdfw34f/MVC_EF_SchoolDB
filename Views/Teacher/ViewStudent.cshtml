@@ -1,0 +1,41 @@
+﻿@using SchoolTestsApp.Models.DB.Entities
+@{
+
+    ViewData["Title"] = "Просмотр ученика";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+@model Student
+<div>
+    <ul>
+        <li>
+            @Html.DisplayFor(m => m.Name)
+            @Html.DisplayFor(m => m.SecondName)
+            @if (Model.ThridName != "" && Model.ThridName != null)
+            {
+                @Html.DisplayFor(m => m.ThridName)
+            }
+        </li>
+        <li>
+            <span>Дата рождения </span> @Html.DisplayFor(m => m.Birthday)
+
+        </li>
+        <li>
+            <div id="contain-tests">
+                <ul>
+                    @if (Model.HistoryTests != null && Model.HistoryTests.Count > 0)
+                        @foreach (var tests in Model.HistoryTests)
+                        {
+                            <li>
+                                <span>Тема</span>
+                                @Html.DisplayFor(m => tests.Test.Title)
+                            </li>
+                            <li>
+                                <span>Оценка</span>
+                                @Html.DisplayFor(m => tests.Mark)
+                            </li>
+                        }
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

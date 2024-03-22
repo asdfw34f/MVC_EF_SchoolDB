@@ -1,0 +1,153 @@
+﻿@using SchoolTestsApp.Models.DB
+@using SchoolTestsApp.Models.Serialize
+
+@{
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    ViewData["Title"] = "Создание теста";
+
+}
+
+@model TestModel
+<form asp-action="AddSentence" method="post">
+    <style>
+        #editorRows input, #submit {
+            margin-bottom: 0;
+           
+            border-radius: 6px;
+            background: whitesmoke;
+            color: black;
+            border: 1px solid #212531;
+            font-size:24px;
+        }
+        body{
+            background: #212531;
+        }
+            input[name='Question'] {
+                border-radius: 2px;
+                width: 300px;
+                height: 100px;
+            }
+
+        #editorRows {
+            font-family: "Gill Sans", sans-serif;
+            border-radius: 2px;
+            overflow-x: hidden;
+            width: 100vw;
+            height: 80vh;
+            margin-bottom: 10px;
+            color: whitesmoke;
+        }
+
+        #editorRows a {
+            padding:4px 6px;
+            background: whitesmoke;
+            color: black;
+            border-radius: 4px;
+            font-size: 20px;
+            text-decoration: none;
+      
+        }
+
+        #addItem{
+            font-size: 24px;
+            margin-right:20px;
+        }
+
+        #editorRow {
+            padding:30px 0px;
+            color:whitesmoke;
+            background: #212531;
+            margin-top: 50px;
+            width:100%;
+            vertical-align: top;
+            margin-bottom: 10px; /* that gives you 10px of space at the bottom of an image*/
+        }
+
+        #editorRows label {
+            margin:0;
+        }
+
+    </style>
+    <div id="editorRows">
+        <label style="margin-top:20px;font-size:28px;" asp-for="@Model.Title">Тема теста:</label>
+        <input type="text" name="Title" value="@Model.Title" />
+
+
+        @foreach (var item in Model.Questions)
+        {
+            <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
+        }
+
+    </div>
+
+    <br />
+    <label for="">Какому классу назначить тест</label>
+    <br />
+    <a id="addItem" asp-action="BlankSentence" asp-controller="Test">Добавить вопрос</a>
+    <input type="submit" id="submit" value="Сохранить" />
+</form>
+
+
+@section scripts {
+    <script>
+        $("#submit").click(function (e) {
+            e.preventDefault();
+            var formData = new FormData();
+
+            $("input[name='Question']").each(function (i) {
+                var question = $(this).val();
+                formData.append("Questions[" + i + "].Question", question);
+            });
+
+            $("input[name='Answer1']").each(function (i) {
+                var answer = $(this).val();
+                formData.append("Questions[" + i + "].Answer1", answer);
+            });
+
+            $("input[name='Answer2']").each(function (i) {
+                var answer = $(this).val();
+                formData.append("Questions[" + i + "].Answer2", answer);
+            });
+
+            $("input[name='Answer3']").each(function (i) {
+                var answer = $(this).val();
+                formData.append("Questions[" + i + "].Answer3", answer);
+            });
+
+            $("input[name='Answer4']").each(function (i) {
+                var answer = $(this).val();
+                formData.append("Questions[" + i + "].Answer4", answer);
+            });
+
+            $("input[name='RightAnswer']").each(function (i) {
+                var RightAnswer = $(this).val();
+                formData.append("Questions[" + i + "].RightAnswer", RightAnswer);
+            });
+
+            $.ajax({
+                method: 'post',
+                url: "Test/AddSentence",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function () {
+
+                }
+            });
+        });
+
+        $("#addItem").click(function () {
+            $.ajax({
+                url: this.href,
+                cache: false,
+                success: function (html) { $("#editorRows").append(html); }
+            });
+            return false;
+        });
+
+        $("a.deleteRow").on("click", function () {
+            $(this).parents("div.editorRow:first").remove();
+            return false;
+        });
+    </script>
+}

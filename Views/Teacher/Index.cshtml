@@ -16,7 +16,6 @@
             @Model.ThridName
         </h4>
     }
-    <div>
         <ul>
             <li>
                 <label>Ваши классы</label>
@@ -26,7 +25,9 @@
                         {
                             @foreach (var cs in Model.Classes)
                             {
-                                <li><a>@cs.ClassCode</a></li>
+                                @Html.ActionLink("Посмотреть класс", "ViewClass", "Teacher", new { id = @cs.id })
+
+                                <li><a href="teacher/classes/@cs.id">@cs.ClassCode</a></li>
                             }
                         }
                     </ul>
@@ -35,5 +36,4 @@
                 </div>
             </li>
         </ul>
-    </div>
 </div>

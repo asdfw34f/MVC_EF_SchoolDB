@@ -57,7 +57,7 @@ app.MapControllerRoute(
     pattern: "{controller=Authorization}/{action=Index}/{id?}");
 app.MapControllerRoute(
     name: "/",
-    pattern: "{controller=Teacher}/{action=AddFile}/{id?}"
+    pattern: "{controller=Teacher}/{action=Index}/{id?}"
     );
 
 app.MapGet("/logout", async (HttpContext context) =>

@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolTestsApp.Models.DB.Entities;
+using SchoolTestsApp.Models.Serialize;
+using SchoolTestsApp.ViewModels;
 
 namespace SchoolTestsApp.Models.DB
 {
@@ -51,7 +53,7 @@ namespace SchoolTestsApp.Models.DB
             SaveChanges();*/
 
 
-            Teachers.AddRange(
+        /*    Teachers.AddRange(
                 new Teacher()
                 {
                     Name = "Daniil",
@@ -60,7 +62,7 @@ namespace SchoolTestsApp.Models.DB
                     Birthday = DateOnly.FromDateTime(new DateTime(2000, 10, 13)),
                     Login="123",
                     Password="321",
-                });
+                });*/
             SaveChanges();
 
         }

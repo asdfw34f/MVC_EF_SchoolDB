@@ -27,15 +27,9 @@
                         <a href="#">Школа №1</a>
                     </div>
                 </div>
-                <li><a asp-action="Index" asp-controller="Teacher">Личный кабинет</a></li>
-               @*
-                @if (!Account.isStudent())
-                {
-                <li>
-                <a asp-action="Index" asp-controller="Teacher">Добавить тест</a>
-                </li>
-                }
-               *@ 
+                <li><a asp-controller="Teacher" asp-action="Index">Личный кабинет</a></li>
+                <li><a asp-controller="Test" asp-action="Index">Создать тест</a></li>
+
                 <li><a href="#events">События</a></li>
                 <li><a href="#contact">Контакты</a></li>
                 <li><a href="#followme">Новостм</a></li>

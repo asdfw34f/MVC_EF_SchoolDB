@@ -7,7 +7,6 @@ namespace SchoolTestsApp.ViewModels
     public class TestViewModel
     {
         ApplicationContext _context;
-
         public TestViewModel(ApplicationContext context)
         {
             _context = context;

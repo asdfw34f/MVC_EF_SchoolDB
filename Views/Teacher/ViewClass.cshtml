@@ -1,0 +1,54 @@
+﻿@using SchoolTestsApp.Models.DB.Entities
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = "Просмотр класса";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+@model Class
+
+<div>
+    <span style="font-size:28px">Класс: @Model.ClassCode</span>
+    <ul>
+        <li>
+            <span style="font-size:28px">Преподователь:</span>
+            @Html.DisplayFor(m => Model.Teacher.Name)
+            @Html.DisplayFor(m => Model.Teacher.SecondName)
+            @if (Model.Teacher.ThridName != "" && Model.Teacher.ThridName != null)
+            {
+                @Html.DisplayFor(m => Model.Teacher.ThridName)
+            }
+        </li>
+        <li>
+            <div id="contain-students">
+                <span>Ученики</span>
+                <ul>
+                    @if (Model.Students != null && Model.Students.Count > 0)
+                    {
+                        @foreach (var st in Model.Students)
+                        {
+                            <li>
+                                @Html.DisplayFor(m => st.Name)
+                                @Html.DisplayFor(m => st.SecondName)
+                                @if (st.ThridName != "" && st.ThridName != null)
+                                {
+                                    @Html.DisplayFor(m => st.ThridName)
+                                }
+                                @Html.ActionLink("Посмотреть успеваемость", "ViewStudent", "Teacher", new { id = @st.id })
+                            </li>
+                        }
+                    }
+                    else
+                    {
+                        <li>
+                            <span>Учеников нет</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+            
+        </li>
+    </ul>
+</div>

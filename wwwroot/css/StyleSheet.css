@@ -8,8 +8,6 @@
 
 body {
     position: relative;
-    overflow-x: scroll;
-    overflow-y: scroll;
     background-color: whitesmoke;
     display: blosk;
 }
@@ -29,7 +27,7 @@ img {
 .contain-content {
     width:100vw;
     box-sizing: border-box;
-    overflow:scroll;
+
 }
 
 .nav .open > a,
@@ -411,8 +409,7 @@ select {
     }
 
 .main {
-    width: 100%;
-    max-width: 550px;
+    width: 100vw;
     display: inline-flex;
     margin-bottom: 60px;
     height: auto;

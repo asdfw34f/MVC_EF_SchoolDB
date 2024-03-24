@@ -1,4 +1,4 @@
-﻿@using SchoolTestsApp.Models.Serialize
+﻿@using SchoolTestsApp.Models.DB.Entities
 @using SchoolTestsApp.ViewModels
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,7 +8,7 @@
     ViewData["Title"] = "Тесты";
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
-@model List<TestViewModelToShow>
+@model List<HistoryTests>
 
 <div class="tests-contain">
     <style>
@@ -71,7 +71,7 @@
             }
 
         .td-subject {
-            text-align: start;
+            text-align: center;
         }
 
         #row-table-td {
@@ -79,14 +79,13 @@
             white-space: pre-wrap;
         }
     </style>
-    <h2>Новые тесты</h2>
+    <h2>Пройденные тесты</h2>
     <hr size="7" />
     <table name="table" class="table">
         <tread class="table-row-tread">
             <tr class="columns-table">
                 <th>Тема</th>
-                <th>Количество вопросов</th>
-                <th>Ссылка</th>
+                <th>Оценка</th>
             </tr>
         </tread>
         <tbody id="me-rows">
@@ -97,8 +96,7 @@
                 {
                     <tr>
                         <td class="td-subject" id="row-table-td" class="cell-multi">@t.Test.Title</td>
-                        <td id="row-table-td">@t.Test.Questions.Count</td>
-                        <td id="row-table-td">@Html.ActionLink("Пройти тест", "ViewTest", "Student", new { id = t.idTest })</td>
+                        <td id="row-table-td">@t.Mark</td>
                     </tr>
                 }
             }

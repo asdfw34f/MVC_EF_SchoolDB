@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.SqlServer.Diagnostics.Internal;
+using Microsoft.EntityFrameworkCore;
 using SchoolTestsApp.AuthenticationModule;
 using SchoolTestsApp.Models.DB;
-using SchoolTestsApp.Models.DB.Entities;
-using SchoolTestsApp.Models.Serialize;
 using SchoolTestsApp.ViewModels;
-using System.Collections.Generic;
 
 namespace SchoolTestsApp.Controllers.Student
 {
@@ -68,11 +65,64 @@ namespace SchoolTestsApp.Controllers.Student
         [Authorize]
         [HttpPost]
         [Route("Students/ViewTest/{id?}")]
-        public IActionResult ViewPostTest(TestViewModelToShow show)
+        public async Task<IActionResult> ViewPostTestAsync(TestViewModelToShow show, int id)
         {
-            int countRight = 0;
+            float countRight = 0;
+            var answers = show.answers;
+
+            show.Test = testsModel.Where(t => t.idTest == id).Single().Test;
+
+            for (int i = 0; i< show.Test.Questions.Count; i++)
+            {
+                if (answers[i] == show.Test.Questions[i].RightAnswer)
+                {
+                    countRight++;
+                }
+            }
+            float proc = 0;
+            if(countRight != 0)
+            {
+                proc =  countRight / show.Test.Questions.Count;
+            }
+            
+            int mark = 0;
+            if (proc < 0.6)
+            {
+                mark = 2;
+            }
+            else if(proc < 0.65)
+            {
+                mark = 3;
+            }
+            else if (proc < 0.77)
+            {
+                mark = 4;
+            }
+            else if (proc < 0.9)
+            {
+                mark = 5;
+            }
+            
+            await _context.History_Tests.AddAsync(new Models.DB.Entities.HistoryTests()
+            {
+                TestID = id,
+                StudentId = (int)Account.GetID(),
+                Mark = mark
+            });
+
+            await _context.SaveChangesAsync();
+
             @ViewBag.ResultCheck ="Правильных ответов: " + countRight;
-            return View("ViewTest");
+            return View("ViewTest", show);
+        }
+
+        [Authorize]
+        [Route("Students/ViewDoneTests/{id?}")]
+        public async Task<IActionResult> ViewDoneTests(int id)
+        {
+            var history = await _context.History_Tests.Where(h => h.Student.ClassId == id && h.StudentId ==Account.GetID()).ToListAsync();
+
+            return View(history);
         }
     }
 }

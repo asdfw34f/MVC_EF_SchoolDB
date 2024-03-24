@@ -58,10 +58,10 @@
         <ul>
             <h5 class="li-title">Смотреть: </h5>
             <li>
-                <input type="submit" value="Новые тесты"/>
+                @Html.ActionLink("Новые тесты", "ViewNewTests", "Student")
             </li>
             <li>
-                <input type="submit" value="Пройденные тесты" />
+                @Html.ActionLink("Пройденные тесты", "ViewDoneTests", "Student", new { id = Model.ClassId })
             </li>
         </ul>
         <hr />

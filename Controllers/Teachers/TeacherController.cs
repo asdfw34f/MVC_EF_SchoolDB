@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer.Diagnostics.Internal;
+using SchoolTestsApp.AuthenticationModule;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.Models.Serialize;
@@ -58,7 +59,14 @@ namespace SchoolTestsApp.Controllers.Teachers
         public async Task<IActionResult> ViewStudent(int id)
         {
             var studentModel = await context.Students.FindAsync(id);
-            studentModel.HistoryTests = await context.History_Tests.Where(h=>h.StudentId == studentModel.id).ToListAsync();
+
+            studentModel.HistoryTests = await context.History_Tests.Where(h => h.StudentId == id).ToListAsync();
+
+            foreach(var test in studentModel.HistoryTests)
+            {
+                test.Test = await context.Tests.FindAsync(test.TestID);
+            }
+
             return View(studentModel);
         }
     }

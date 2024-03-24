@@ -4,7 +4,7 @@
     public class TestModel
     {
         public string Title { get; set; }
-        public IList<QuestionModel> Questions { get; set; }
+        public List<QuestionModel> Questions { get; set; }
     }
 
     [Serializable]
@@ -21,10 +21,4 @@
         public int RightAnswer { get; set; } = 0;
     }
 
-    [Serializable]
-    public class AnswerModel
-    {
-        public string Answer { get; set; }
-        public bool isRight { get; set; }
-    }
 }

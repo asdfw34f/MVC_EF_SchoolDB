@@ -1,5 +1,6 @@
 ﻿@using SchoolTestsApp.Models.DB
 @using SchoolTestsApp.Models.Serialize
+@using SchoolTestsApp.ViewModels
 
 @{
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
@@ -7,7 +8,7 @@
 
 }
 
-@model TestModel
+@model TestViewModel
 <form asp-action="AddSentence" method="post">
     <style>
         #editorRows input, #submit {
@@ -66,17 +67,21 @@
         #editorRows label {
             margin:0;
         }
+        select{
+            margin-bottom:5%;
+        }
 
     </style>
     <div id="editorRows">
-        <label style="margin-top:20px;font-size:28px;" asp-for="@Model.Title">Тема теста:</label>
-        <input type="text" name="Title" value="@Model.Title" />
+        <label style="margin-top:20px;font-size:28px;" asp-for="@Model.TestModel">Тема теста:</label>
+        @Html.EditorFor(m=>m.TestModel.Title)
 
-
-        @foreach (var item in Model.Questions)
+        @foreach (var item in Model.TestModel.Questions)
         {
             <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
         }
+
+        @Html.DropDownListFor(m=> m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
 
     </div>
 
@@ -93,35 +98,42 @@
         $("#submit").click(function (e) {
             e.preventDefault();
             var formData = new FormData();
+     
 
             $("input[name='Question']").each(function (i) {
                 var question = $(this).val();
-                formData.append("Questions[" + i + "].Question", question);
+                formData.append("TestModel.Questions[" + i + "].Question", question);
             });
 
             $("input[name='Answer1']").each(function (i) {
                 var answer = $(this).val();
-                formData.append("Questions[" + i + "].Answer1", answer);
+                formData.append("TestModel.Questions[" + i + "].Answer1", answer);
             });
 
             $("input[name='Answer2']").each(function (i) {
                 var answer = $(this).val();
-                formData.append("Questions[" + i + "].Answer2", answer);
+                formData.append("TestModel.Questions[" + i + "].Answer2", answer);
             });
 
             $("input[name='Answer3']").each(function (i) {
                 var answer = $(this).val();
-                formData.append("Questions[" + i + "].Answer3", answer);
+                formData.append("TestModel.Questions[" + i + "].Answer3", answer);
             });
+
 
             $("input[name='Answer4']").each(function (i) {
                 var answer = $(this).val();
-                formData.append("Questions[" + i + "].Answer4", answer);
+                formData.append("TestModel.Questions[" + i + "].Answer4", answer);
             });
 
             $("input[name='RightAnswer']").each(function (i) {
                 var RightAnswer = $(this).val();
-                formData.append("Questions[" + i + "].RightAnswer", RightAnswer);
+                formData.append("TestModel.Questions[" + i + "].RightAnswer", RightAnswer);
+            });
+             
+            $("input[name='TestModel.Title']").val(function (title) {
+                var title = $(this).val();
+                formData.append("TestModel.Title", title);
             });
 
             $.ajax({

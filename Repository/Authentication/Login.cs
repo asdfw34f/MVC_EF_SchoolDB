@@ -18,6 +18,7 @@ namespace SchoolTestsApp.Repository.Authentication
 
         public async Task<Student> AuthenticateStudent(string username, string password)
         {
+            var sts = await context.Students.ToListAsync();
             var succeeded = await context.Students.FirstOrDefaultAsync(u => u.Login == username && u.Password == password);
             return succeeded;
         }

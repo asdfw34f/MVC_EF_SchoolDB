@@ -1,65 +1,144 @@
 ﻿using SchoolTestsApp.Models.Serialize;
 using System.Xml.Serialization;
 using SchoolTestsApp.Models.DB;
+using SchoolTestsApp.Models.DB.Entities;
+using System.Xml;
+using Microsoft.EntityFrameworkCore;
+using System.IdentityModel.Tokens.Jwt;
+using System;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SchoolTestsApp.ViewModels
 {
     public class TestViewModel
     {
-        ApplicationContext _context;
-        public TestViewModel(ApplicationContext context)
+        public TestModel TestModel { get; set; } = new TestModel();
+        public List<Class> ClassList { get; set; } = new List<Class>();
+        public int classID { get; set; }
+
+        public TestViewModel()
         {
-            _context = context;
         }
 
-        protected byte[] Serialize(TestModel test)
-        {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
-
-            using (MemoryStream stream = new MemoryStream())
+        /*    protected byte[] Serialize(TestModel test)
             {
-                xmlSerializer.Serialize(stream, test);
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
 
-                using (MemoryStream ms = new MemoryStream())
+
+                using (FileStream fs = new FileStream("temp.xml", FileMode.OpenOrCreate))
                 {
-                    byte[] buffer = new byte[16 * 1024];
-                    int read;
-                    while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
-                    {
-                        ms.Write(buffer, 0, read);
-                    }
-                    return ms.ToArray();
-                }
-            }
-        }
+                    xmlSerializer.Serialize(fs, test);
+                    Console.WriteLine("Object has been serialized");
+                    Console.ReadKey();
+
+                }   
+            }*/
 
         protected TestModel? DeserializeXmlFromByteArray(byte[] byteArray)
         {
+            XmlDocument xmlDocument = new XmlDocument();
+
             using (MemoryStream stream = new MemoryStream(byteArray))
             {
+                xmlDocument.Load(stream);
+
                 XmlSerializer serializer = new XmlSerializer(typeof(TestModel));
                 return serializer.Deserialize(stream) as TestModel;
             }
         }
 
-        public TestModel? ReadFromDB(int id)
+        public async Task<List<TestViewModelToShow?>> ReadFromDBAsync(int classId, ApplicationContext _context)
         {
-            var test = _context.Tests.Where(t => t.id == id).Single().TestFile;
-            return DeserializeXmlFromByteArray(test);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
+            var tests = await _context.Tests.Where(t => t.Class == classID).ToListAsync();
+
+            List<TestViewModelToShow?> result = new List<TestViewModelToShow?>();
+            foreach (var t in tests)
+            {
+                byte[] bytes = t.TestFile;
+
+                using (FileStream fs = new FileStream("temp.xml", FileMode.OpenOrCreate))
+                {
+                    await fs.WriteAsync(bytes, 0, bytes.Length);
+                }
+                try
+                {
+                    using (var reader = new StreamReader("temp.xml"))
+                    {
+                        TestModel? item = xmlSerializer.Deserialize(reader) as TestModel;
+                        result.Add(new TestViewModelToShow() {Test = item, idTest=t.id});
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await Console.Out.WriteLineAsync(ex.Message);
+                }
+                File.Delete("temp.xml");
+            }
+            return result;
+
+        }
+        protected async Task WriteBytes(Stream fs, byte[] dataArray)
+        {
+            // Write the data to the file, byte by byte.
+            for (int i = 0; i < dataArray.Length; i++)
+            {
+                fs.WriteByte(dataArray[i]);
+            }
+
+            // Set the stream position to the beginning of the file.
+            fs.Seek(0, SeekOrigin.Begin);
+
+            // Read and verify the data.
+            for (int i = 0; i < fs.Length; i++)
+            {
+                if (dataArray[i] != fs.ReadByte())
+                {
+                    Console.WriteLine("Error writing data.");
+                    return;
+                }
+            }
+            Console.WriteLine("The data was written to {0} " +
+                "and verified.");
         }
 
-        public void WriteToDB(TestModel test, int classID)
+        public async Task WriteToDBAsync(TestModel test, int classID, ApplicationContext _context)
         {
-            var bytes = Serialize(test);
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
 
-            _context.Tests.Add(
-                new Models.DB.Entities.Test()
+            using (FileStream fs = new FileStream("temp.xml", FileMode.Create))
+            {
+                xmlSerializer.Serialize(fs, test);
+                Console.WriteLine("Object has been serialized");
+            }
+            using (FileStream fs = new FileStream("temp.xml", FileMode.Open))
+            {
+                var bytes = ReadFully(fs);
+                await _context.Tests.AddAsync(
+                           new Test()
+                           {
+                               Title = test.Title,
+                               TestFile = bytes,
+                               Class = classID
+                           });
+                await _context.SaveChangesAsync();
+            }
+            File.Delete("temp.xml");
+        }
+
+        protected byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
                 {
-                    Title = test.Title,
-                    TestFile = bytes,
-                    Class = classID
-                });
-            _context.SaveChanges();
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
         }
     }
+   
 }

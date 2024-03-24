@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SchoolTestsApp.AuthenticationModule;
 using SchoolTestsApp.Models.DB;
 
 namespace SchoolTestsApp.Controllers.Authorization
@@ -24,21 +25,21 @@ namespace SchoolTestsApp.Controllers.Authorization
 
         [HttpPost]
         [Route("/login")]
-        public IActionResult Index(string username, string password)
+        public async Task<IActionResult> Index(string username, string password)
         {
 
-            var issuccess = _Login.Authectication(username, password, HttpContext);
-            if (issuccess.Result)
+            var issuccess = await _Login.Authectication(username, password, HttpContext);
+            if (issuccess)
             {
                 ViewBag.username = string.Format("Successfully logged-in", username);
                 TempData["username"] = "Ahmed";
                 if (!AuthenticationModule.Account.isStudent())
                 {
-                    return Redirect("/");
+                    return RedirectToRoute( new {controller="Teacher", action="Index", id = Account.GetID() });
                 }
                 else
                 {
-                    // return student view
+                    return RedirectToRoute( new {controller="Student", action="Index", id = Account.GetID() });
                 }
             }
             else

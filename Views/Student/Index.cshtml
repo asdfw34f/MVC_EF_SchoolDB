@@ -1,0 +1,71 @@
+﻿@model SchoolTestsApp.Models.DB.Entities.Student
+
+@{
+    ViewData["Title"] = "Профиль";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<div class="stud-contain">
+    <style>
+        .tests-contain {
+            height: 90vh;
+            width: 90vw;
+        }
+        .stud-contain ul li {
+            clear: both;
+            color:black;
+            font-size: 24px;
+        }
+
+        .stud-contain h5{
+            color:black;
+        }
+        .stud-contain ul{
+            width:90vw;
+            display: grid;
+            grid-template-columns: auto auto auto;
+        }
+        input[type=submit]{
+            font-size: 24px;
+        }
+
+        .li-title{
+            width:150px;
+            left:0;
+            margin:0;
+        }
+
+    </style>
+    <h2>@Html.DisplayFor(m => m.SecondName) @Html.DisplayFor(m => m.Name) @Html.DisplayFor(m => m.ThridName)</h2>
+    <hr />
+    <ul>
+        <li class="li-title">
+            <h5>О себе: </h5>
+        </li>
+
+        <li >
+            <label for="">Дата рождения:</label>
+            @Html.DisplayFor(m=> m.Birthday)
+        </li>
+        <li >
+            <label for="">Класс:</label>
+            @Html.DisplayFor(m=>m.Class.ClassCode)
+        </li>
+    </ul>
+    <hr />
+    <br />
+    <div>
+        <ul>
+            <h5 class="li-title">Смотреть: </h5>
+            <li>
+                <input type="submit" value="Новые тесты"/>
+            </li>
+            <li>
+                <input type="submit" value="Пройденные тесты" />
+            </li>
+        </ul>
+        <hr />
+        <br />
+    </div>
+
+</div>

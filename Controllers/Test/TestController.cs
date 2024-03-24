@@ -3,6 +3,9 @@ using SchoolTestsApp.Models.Serialize;
 using SchoolTestsApp.Models;
 using System.Diagnostics;
 using SchoolTestsApp.Models.DB;
+using SchoolTestsApp.ViewModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SchoolTestsApp.Controllers.Test
 {
@@ -19,22 +22,27 @@ namespace SchoolTestsApp.Controllers.Test
             _context = context;
         }
 
-        public IActionResult Index()
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            var model = new TestModel()
+            var model = new TestViewModel()
             {
-                Questions = new List<QuestionModel>()
+                ClassList = await _context.Classes.ToListAsync(),
+                TestModel = new TestModel()
                 {
-                      new QuestionModel()
-                      {
-                          id = 0,
-                          Question = "Question 1",
-                      },
-                      new QuestionModel()
-                      {
-                          id=1,
-                          Question = "Question 2",
-                      }
+                    Questions = new List<QuestionModel>()
+                    {
+                        new QuestionModel()
+                        {
+                            id = 0,
+                            Question = "Question 1",
+                        },
+                        new QuestionModel()
+                        {
+                            id = 1,
+                            Question = "Question 2",
+                        }
+                    }
                 }
             };
 
@@ -43,20 +51,25 @@ namespace SchoolTestsApp.Controllers.Test
 
 
         [HttpPost]
-        public async Task<IActionResult> AddSentence(TestModel model, int classID)
+        [Authorize]
+        public async Task<IActionResult> AddSentence(TestViewModel model)
         {
-            var test = new TestModel() { Questions = new List<QuestionModel>() };
-            foreach (var question in model.Questions)
+            var test = new TestViewModel() { TestModel = new TestModel() {  Questions= new List<QuestionModel>() } };
+            foreach (var question in model.TestModel.Questions)
             {
                 if (question != null && !string.IsNullOrEmpty(question.Question))
                 {
-                    test.Questions.Add(question);
+                    test.TestModel.Questions.Add(question);
                 }
             }
+            
+            model.WriteToDBAsync(model.TestModel, model.classID, _context);
+
 
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult BlankSentence()
         {
             questionID++;
@@ -74,6 +87,7 @@ namespace SchoolTestsApp.Controllers.Test
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        [Authorize]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

@@ -63,7 +63,6 @@ namespace SchoolTestsApp.Models.DB
                     Login="123",
                     Password="321",
                 });*/
-            SaveChanges();
 
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Diagnostics.Internal;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.Models.Serialize;
@@ -34,52 +35,14 @@ namespace SchoolTestsApp.Controllers.Teachers
 
         }
 
-        #region аккаунт
-        [Route("/")]
+        [Route("/Teacher/{id?}")]
         [Authorize]
         public IActionResult Index()
         {
+            var id = self.id;
             return View("Index", self);
         }
-
-        #endregion
-
-        #region добавление тестов
-
-        #endregion
-
-        #region create test
-        /*    [Route("/create%%link")]
-           [Authorize]
-           public IActionResult LinkCreateTest()
-           {
-               return CreateTest();
-           }
-
-           [Route("/create")]
-           [Authorize]
-           public IActionResult CreateTest()
-           {
-               return View("CreateTest1", testMain);
-           }
-
-           [Route("/create/AddQuetion")]
-           [Authorize]
-           [HttpPost]
-           public IActionResult addAnswer(int questionID)
-           {
-               return RedirectToAction("CreateTest");
-           }
-
-           [Authorize]
-           public IActionResult BlankSentence()
-           {
-               return PartialView("PartialQuestion", new QuestionModel());
-           }
-        */
-
-        #endregion
-
+    
         [Route("Teacher/ViewClass/{id}")]
         [Authorize]
         public async Task<IActionResult> ViewClass(int id)

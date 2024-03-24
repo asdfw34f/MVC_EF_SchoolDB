@@ -56,10 +56,21 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Authorization}/{action=Index}/{id?}");
 app.MapControllerRoute(
-    name: "/",
+    name: "/login",
+    pattern: "{controller=Authorization}/{action=Index}/{id?}");
+app.MapControllerRoute(
+    name: "/teacher",
     pattern: "{controller=Teacher}/{action=Index}/{id?}"
     );
+app.MapControllerRoute(
+    name: "/student",
+    pattern: "{controller=Student}/{action=Index}/{id?}"
+    );
 
+app.MapGet("/", async(HttpContext context) =>
+{
+    return await Task.FromResult(Results.Redirect("/logout"));
+});
 app.MapGet("/logout", async (HttpContext context) =>
 {
     await context.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

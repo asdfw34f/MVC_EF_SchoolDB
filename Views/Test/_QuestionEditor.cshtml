@@ -7,11 +7,10 @@
 @model QuestionModel
 <div class="editorRow" id="editorRow">
     <hr />
-
     <span>Вопрос: </span> @Html.EditorFor(m => m.Question)
-    <ul id="ques">
+    <ul id="ques" class="list-group">
             <label>Варианты ответа</label>
-        <li>
+        <li class="list-group-item">
             <span>1. </span>
 
             @Html.EditorFor(m => m.Answer1)
@@ -19,13 +18,13 @@
             @Html.EditorFor(m => m.Answer2)
         </li>
 
-        <li>
+        <li class="list-group-item">
             <span>3. </span>
             @Html.EditorFor(m => m.Answer3)
             <span>4. </span>
             @Html.EditorFor(m => m.Answer4)
         </li>
-        <li>
+        <li class="list-group-item">
             <span>Парвильный ответ:</span>
             @Html.EditorFor(m => m.RightAnswer)
         </li>

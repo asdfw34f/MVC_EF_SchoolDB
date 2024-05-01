@@ -11,72 +11,32 @@
   //  TestViewModelToShow test = ViewBag.testModel;
 }
 <div class="tests-contain">
-    <style>
-        .tests-contain {
-            display: inline-block;
-            height: 90vh;
-            width: 90vw;
-            margin-left: 0;
-            overflow-x: auto;
-            background-color: whitesmoke;
-        }
-
-        .tests-contain form {
-                display: inline-block;
-            }
-        
-            .tests-contain ul li {
-                color: black;
-                font-size: 24px;
-            }
-
-            .tests-contain h5 {
-                color: black;
-            }
-
-            .tests-contain ul {
-                width: 90vw;
-                display: grid;
-                grid-template-columns: auto auto auto;
-            }
-
-        input[type=submit] {
-            font-size: 24px;
-        }
-
-        hr {
-            opacity: 0.9;
-            color: #212531;
-            width: 100vw;
-        }
-
-        .li-title {
-            width: 150px;
-            left: 0;
-            margin: 0;
-        }
-    </style>
-    <h2>@Model.Test.Title</h2>
+    <h2 class="card-header">@Model.Test.Title</h2>
     <br />
     <hr size="7" />
     <form method="post" asp-controller="Student" asp-action="ViewPostTest" enctype="multipart/form-data">
-        @for (int i = 0; i < Model.Test.Questions.Count; i++)
+        <ul class="list-group list-group-flush">
+            @for (int i = 0; i < Model.Test.Questions.Count; i++)
         {
-            <br>
-            <h3>@Model.Test.Questions[i].Question</h3>
-            <input hidden name="id" value="@Model.idTest"/>
-            <br>
-            <p>1) @Html.DisplayFor(m => m.Test.Questions[i].Answer1)</p>
-            <p>2) @Html.DisplayFor(m => m.Test.Questions[i].Answer2)</p>
-            <p>3) @Html.DisplayFor(m => m.Test.Questions[i].Answer3)</p>
-            <p>4) @Html.DisplayFor(m => m.Test.Questions[i].Answer4)</p>
-
-            <label asp-for="@Model.answers[i]">Ответ:</label>
-            @Html.EditorFor(m => m.answers[i])
-
+                <li class="list-group-item d-flex align-items-center">
+                    <div class="card-body">
+                        <br>
+                        <h3 class="card-title">@Model.Test.Questions[i].Question</h3>
+                        <input hidden name="id" value="@Model.idTest" />
+                        <br>
+                        <p class="card-text">1) @Html.DisplayFor(m => m.Test.Questions[i].Answer1)</p>
+                        <p class="card-text">2) @Html.DisplayFor(m => m.Test.Questions[i].Answer2)</p>
+                        <p class="card-text">3) @Html.DisplayFor(m => m.Test.Questions[i].Answer3)</p>
+                        <p class="card-text">4) @Html.DisplayFor(m => m.Test.Questions[i].Answer4)</p>
+                    </div>
+                    <label class="card-text" asp-for="@Model.answers[i]">Ответ:</label>
+                    @Html.EditorFor(m => m.answers[i])
+                </li>
         }
+        </ul>
+
         <br>
         <input class="btn" type="submit" value="submit" />
-        @ViewBag.ResultCheck
     </form>
+    <p class="h6">@ViewBag.ResultCheck</p>
 </div>

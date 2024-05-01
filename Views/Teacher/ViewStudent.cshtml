@@ -88,7 +88,7 @@
         </tread>
         <tbody id="me-rows">
 
-            @if (Model.HistoryTests.Count() > 0)
+            @if (Model.HistoryTests!=null && Model.HistoryTests.Count() > 0)
             {
                 foreach (var t in Model.HistoryTests)
                 {
@@ -97,6 +97,10 @@
                         <td id="row-table-td">@t.Mark</td>
                     </tr>
                 }
+            }
+            else
+            {
+                
             }
         </tbody>
     </table>

@@ -5,7 +5,6 @@
 @{
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
     ViewData["Title"] = "Создание теста";
-
 }
 
 @model TestViewModel
@@ -15,13 +14,22 @@
             margin-bottom: 0;
            
             border-radius: 6px;
-            background: whitesmoke;
+            background: white;
             color: black;
-            border: 1px solid #212531;
             font-size:24px;
         }
-        body{
-            background: #212531;
+
+        #editorRows #TestModel_Title #RightAnswer {
+            width: 400px;
+            text-align: center;
+        }
+
+        #editorRows #TestModel_Title {
+            margin-left:400px;
+            margin-right: 400px;
+        }
+        input[name='RightAnswer']{
+            border: 1px solid black;
         }
             input[name='Question'] {
                 border-radius: 2px;
@@ -30,18 +38,19 @@
             }
 
         #editorRows {
+            text-align: center;
             font-family: "Gill Sans", sans-serif;
             border-radius: 2px;
             overflow-x: hidden;
             width: 100vw;
             height: 80vh;
             margin-bottom: 10px;
-            color: whitesmoke;
+            color: black;
         }
 
         #editorRows a {
             padding:4px 6px;
-            background: whitesmoke;
+                background: white;
             color: black;
             border-radius: 4px;
             font-size: 20px;
@@ -56,8 +65,8 @@
 
         #editorRow {
             padding:30px 0px;
-            color:whitesmoke;
-            background: #212531;
+            color:black;
+            background: white;
             margin-top: 50px;
             width:100%;
             vertical-align: top;
@@ -70,9 +79,12 @@
         select{
             margin-bottom:5%;
         }
+        input[type=text]{
+            border: 1px solid black;
+        }
 
     </style>
-    <div id="editorRows">
+    <div class="card" id="editorRows">
         <label style="margin-top:20px;font-size:28px;" asp-for="@Model.TestModel">Тема теста:</label>
         @Html.EditorFor(m=>m.TestModel.Title)
 
@@ -80,16 +92,15 @@
         {
             <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
         }
-
-        @Html.DropDownListFor(m=> m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
+        <div class="card-footer">
+            Для класса
+            @Html.DropDownListFor(m => m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
+        </div>
 
     </div>
 
-    <br />
-    <label for="">Какому классу назначить тест</label>
-    <br />
-    <a id="addItem" asp-action="BlankSentence" asp-controller="Test">Добавить вопрос</a>
-    <input type="submit" id="submit" value="Сохранить" />
+    <a id="addItem" asp-action="BlankSentence" class="btn btn-primary" asp-controller="Test">Добавить вопрос</a>
+    <input type="submit" class="btn btn-primary" id="submit" value="Сохранить" />
 </form>
 
 

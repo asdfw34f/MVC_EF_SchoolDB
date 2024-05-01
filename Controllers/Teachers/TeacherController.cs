@@ -61,13 +61,13 @@ namespace SchoolTestsApp.Controllers.Teachers
             var studentModel = await context.Students.FindAsync(id);
 
             studentModel.HistoryTests = await context.History_Tests.Where(h => h.StudentId == id).ToListAsync();
+                foreach (var test in studentModel.HistoryTests)
+                {
+                    test.Test = await context.Tests.FindAsync(test.TestID);
+                }
+                return View(studentModel);
 
-            foreach(var test in studentModel.HistoryTests)
-            {
-                test.Test = await context.Tests.FindAsync(test.TestID);
-            }
 
-            return View(studentModel);
         }
     }
 }

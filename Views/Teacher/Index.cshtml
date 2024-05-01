@@ -8,6 +8,13 @@
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
 }
 
+<style>
+    .full-width-div {
+        position: absolute;
+        width: 100%;
+        left: 0;
+    }
+</style>
 <div>
     <h4 class="names">@Model.SecondName @Model.Name </h4>
     @if (Model.ThridName != null)
@@ -15,25 +22,34 @@
         <h4 class="names">
             @Model.ThridName
         </h4>
-    }
-        <ul>
-            <li>
-                <label>Ваши классы</label>
-                <div>
-                    <ul class="horizontal">
-                        @if (Model.Classes != null)
-                        {
-                            @foreach (var cs in Model.Classes)
-                            {
+    } 
+    <div class="card-body">
+        <style>
+            a {
+                text-decoration: none;
+                color: white;
+            }
+        </style>
+        <div>
+            Ваши классы
+            <ul class="list-group">
+                @if (Model.Classes != null)
+                {
+                    @foreach (var cs in Model.Classes)
+                    {
+                        <li class="list-group-item">
+                            <div class="btn btn-primary">
+                                @cs.ClassCode
                                 @Html.ActionLink("Посмотреть класс", "ViewClass", "Teacher", new { id = @cs.id })
 
-                                <li><a href="teacher/classes/@cs.id">@cs.ClassCode</a></li>
-                            }
-                        }
-                    </ul>
-                </div>
-                <div>
-                </div>
-            </li>
-        </ul>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+        <div>
+        </div>
+    </div>
+
 </div>

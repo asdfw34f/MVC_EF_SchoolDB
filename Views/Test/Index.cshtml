@@ -70,7 +70,7 @@
             margin-top: 50px;
             width:100%;
             vertical-align: top;
-            margin-bottom: 10px; /* that gives you 10px of space at the bottom of an image*/
+            margin-bottom: 10px; 
         }
 
         #editorRows label {
@@ -169,7 +169,7 @@
         });
 
         $("a.deleteRow").on("click", function () {
-            $(this).parents("div.editorRow:first").remove();
+            $(this).parents("div.editorRow:last").remove();
             return false;
         });
     </script>

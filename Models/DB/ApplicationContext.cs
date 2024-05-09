@@ -16,41 +16,44 @@ namespace SchoolTestsApp.Models.DB
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
         {
-         //   Database.EnsureDeleted();
-            Database.EnsureCreated();
-            /*
-            Students.AddRange(new List<Student>
+            /*Database.EnsureDeleted();
+            if (Database.EnsureCreated())
+            {
+                Students.AddRange(new List<Student>
                 {
                 new Student {
                     Birthday=DateOnly.Parse("12.12.2000"),
-                    Name = "Ivan",
-                    SecondName = "Stepanov",
-                    ThridName = "Maximovich",
+                    Name = "Иван",
+                    SecondName = "Степанов",
+                    ThridName = "Максимович",
                     ClassId = 1,
                     Login = "s1",
                     Password="ps1"
-                    
+
                 },
                 new Student {
                     Birthday=DateOnly.Parse("02.01.2001"),
-                    Name = "Petr",
-                    SecondName = "Ivanov",
-                    ThridName = "Nikitovich",
+                    Name = "Пётр",
+                    SecondName = "Иванов",
+                    ThridName = "Никитович",
                     ClassId = 2,
                     Login = "s2",
                     Password="ps2"
                 },
                 new Student {
                     Birthday=DateOnly.Parse("10.11.2001"),
-                    Name = "Anastasia",
-                    SecondName = "Minornaya",
-                    ThridName = "Nikitovna",
+                    Name = "Анастасия",
+                    SecondName = "Минорная",
+                    ThridName = "Никитовна",
                     ClassId = 1,
                     Login = "s3",
                     Password="ps3"
                 }
             });
-            SaveChanges();*/
+                SaveChanges();
+            }
+            */
+            
 
 
         /*    Teachers.AddRange(

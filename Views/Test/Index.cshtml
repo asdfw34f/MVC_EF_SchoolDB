@@ -1,13 +1,17 @@
-﻿@using SchoolTestsApp.Models.DB
+﻿@using SchoolTestsApp.Helpers
+@using SchoolTestsApp.Models.DB
 @using SchoolTestsApp.Models.Serialize
 @using SchoolTestsApp.ViewModels
 
 @{
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
     ViewData["Title"] = "Создание теста";
+
+    ItemIndexCount.Count = 1;
 }
 
 @model TestViewModel
+<br/>
 <form asp-action="AddSentence" method="post">
     <style>
         #editorRows input, #submit {
@@ -85,20 +89,20 @@
 
     </style>
     <div class="card" id="editorRows">
-        <label style="margin-top:20px;font-size:28px;" asp-for="@Model.TestModel">Тема теста:</label>
+        <label style="margin-top:50px;font-size:28px;" asp-for="@Model.TestModel">Тема теста:</label>
         @Html.EditorFor(m=>m.TestModel.Title)
 
         @foreach (var item in Model.TestModel.Questions)
         {
             <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
         }
-        <div class="card-footer">
-            Для класса
-            @Html.DropDownListFor(m => m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
-        </div>
+        
 
     </div>
-
+    <div class="card-footer">
+        Для класса
+        @Html.DropDownListFor(m => m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
+    </div>
     <a id="addItem" asp-action="BlankSentence" class="btn btn-primary" asp-controller="Test">Добавить вопрос</a>
     <input type="submit" class="btn btn-primary" id="submit" value="Сохранить" />
 </form>
@@ -106,6 +110,7 @@
 
 @section scripts {
     <script>
+        var index = 2;
         $("#submit").click(function (e) {
             e.preventDefault();
             var formData = new FormData();
@@ -160,6 +165,7 @@
         });
 
         $("#addItem").click(function () {
+            index++;
             $.ajax({
                 url: this.href,
                 cache: false,
@@ -168,9 +174,12 @@
             return false;
         });
 
-        $("a.deleteRow").on("click", function () {
-            $(this).parents("div.editorRow:first").remove();
-            return false;
-        });
+        function deleteItem(id) {
+
+          //  console.log(`edit ${id}`);
+            const element = document.getElementById(`edit ${id}`);
+            element.remove();
+
+        }
     </script>
 }

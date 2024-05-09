@@ -6,6 +6,7 @@ using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using SchoolTestsApp.Helpers;
 
 namespace SchoolTestsApp.Controllers.Test
 {
@@ -13,7 +14,6 @@ namespace SchoolTestsApp.Controllers.Test
     {
         private readonly ILogger<TestController> _logger;
         private ApplicationContext _context;
-        int questionID = 1;
 
         public TestController(ILogger<TestController> logger, ApplicationContext context)
         {
@@ -72,11 +72,11 @@ namespace SchoolTestsApp.Controllers.Test
         [Authorize]
         public IActionResult BlankSentence()
         {
-            questionID++;
+            ItemIndexCount.Count++;
 
             return PartialView("_QuestionEditor", new QuestionModel()
             {
-                id = questionID,
+                id = ItemIndexCount.Count,
                 Question = "Question text",
             });
         }

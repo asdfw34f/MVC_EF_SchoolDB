@@ -11,102 +11,105 @@
 }
 
 @model TestViewModel
-<br/>
-<form asp-action="AddSentence" method="post">
-    <style>
-        #editorRows input, #submit {
-            margin-bottom: 0;
-           
-            border-radius: 6px;
-            background: white;
-            color: black;
-            font-size:24px;
-        }
+    <form asp-action="AddSentence" method="post">
+    <br />
 
-        #editorRows #TestModel_Title #RightAnswer {
-            width: 400px;
-            text-align: center;
-        }
+        <style>
+            #editorRows input, #submit {
+                margin-bottom: 0;
+                border-radius: 6px;
+                background: white;
+                color: black;
+                font-size: 24px;
+            }
 
-        #editorRows #TestModel_Title {
-            margin-left:400px;
-            margin-right: 400px;
-        }
-        input[name='RightAnswer']{
-            border: 1px solid black;
-        }
+            #editorRows #TestModel_Title #RightAnswer {
+                width: 400px;
+                text-align: center;
+            }
+
+            #editorRows #TestModel_Title {
+                margin-left: 400px;
+                margin-right: 400px;
+            }
+
+            input[name='RightAnswer'] {
+                border: 1px solid black;
+            }
+
             input[name='Question'] {
                 border-radius: 2px;
                 width: 300px;
                 height: 100px;
             }
 
-        #editorRows {
-            text-align: center;
-            font-family: "Gill Sans", sans-serif;
-            border-radius: 2px;
-            overflow-x: hidden;
-            width: 100vw;
-            height: 80vh;
-            margin-bottom: 10px;
-            color: black;
-        }
+            #editorRows {
+                text-align: center;
+                font-family: "Gill Sans", sans-serif;
+                border-radius: 2px;
+                overflow-x: hidden;
+                width: 100vw;
+                height: 80vh;
+                margin-bottom: 10px;
+                color: black;
+            }
 
-        #editorRows a {
-            padding:4px 6px;
+                #editorRows a {
+                    padding: 4px 6px;
+                    background: white;
+                    color: black;
+                    border-radius: 4px;
+                    font-size: 20px;
+                    text-decoration: none;
+                }
+
+            #addItem {
+                font-size: 24px;
+                margin-right: 20px;
+            }
+
+            #editorRow {
+                padding: 30px 0px;
+                color: black;
                 background: white;
-            color: black;
-            border-radius: 4px;
-            font-size: 20px;
-            text-decoration: none;
-      
-        }
+                margin-top: 50px;
+                width: 100%;
+                vertical-align: top;
+                margin-bottom: 10px; /* that gives you 10px of space at the bottom of an image*/
+            }
 
-        #addItem{
-            font-size: 24px;
-            margin-right:20px;
-        }
+            #editorRows label {
+                margin: 0;
+            }
 
-        #editorRow {
-            padding:30px 0px;
-            color:black;
-            background: white;
-            margin-top: 50px;
-            width:100%;
-            vertical-align: top;
-            margin-bottom: 10px; /* that gives you 10px of space at the bottom of an image*/
-        }
+            select {
+                margin-bottom: 5%;
+            }
 
-        #editorRows label {
-            margin:0;
-        }
-        select{
-            margin-bottom:5%;
-        }
-        input[type=text]{
-            border: 1px solid black;
-        }
+            input[type=text] {
+                border: 1px solid black;
+            }
 
-    </style>
-    <div class="card" id="editorRows">
-        <label style="margin-top:50px;font-size:28px;" asp-for="@Model.TestModel">Тема теста:</label>
-        @Html.EditorFor(m=>m.TestModel.Title)
+        </style>
+        <div class="card" id="editorRows">
+            <label style="margin-top:50px;font-size:28px;" asp-for="@Model.TestModel">Тема теста:</label>
+            @Html.EditorFor(m => m.TestModel.Title)
 
-        @foreach (var item in Model.TestModel.Questions)
-        {
-            <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
-        }
-        
+            @foreach (var item in Model.TestModel.Questions)
+            {
+                <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
+            }
 
-    </div>
-    <div class="card-footer">
-        Для класса
-        @Html.DropDownListFor(m => m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
-    </div>
-    <a id="addItem" asp-action="BlankSentence" class="btn btn-primary" asp-controller="Test">Добавить вопрос</a>
-    <input type="submit" class="btn btn-primary" id="submit" value="Сохранить" />
-</form>
 
+        </div>
+        <div class="card-footer">
+            Для класса
+            @Html.DropDownListFor(m => m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
+            @ViewBag.Result
+        </div>
+        <a id="addItem" asp-action="BlankSentence" class="btn btn-primary" asp-controller="Test">Добавить вопрос</a>
+    <input type="submit" class="btn btn-primary" id="submit" value="Сохранить" asp-action="AddSentence" />
+    </form>
 
 @section scripts {
     <script>

@@ -66,7 +66,14 @@ namespace SchoolTestsApp.Controllers.Test
             model.WriteToDBAsync(model.TestModel, model.classID, _context);
 
 
-            return RedirectToAction("Index");
+            return View("SavedTest");
+        }
+
+        [Route("Test/success-index")]
+        [Authorize]
+        public IActionResult SavedTest()
+        {
+            return View();
         }
 
         [Authorize]

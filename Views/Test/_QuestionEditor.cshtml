@@ -7,6 +7,8 @@
 @model QuestionModel
 <div class="editorRow" id="edit @Model.id">
     <hr />
+    <br />
+
     <span>Вопрос: </span> @Html.EditorFor(m => m.Question)
     <ul id="ques" class="list-group">
             <label>Варианты ответа</label>
@@ -25,7 +27,7 @@
             @Html.EditorFor(m => m.Answer4)
         </li>
         <li class="list-group-item">
-            <span>Парвильный ответ:</span>
+            <span>Номер правильного ответа</span>
             @Html.EditorFor(m => m.RightAnswer)
         </li>
     </ul>

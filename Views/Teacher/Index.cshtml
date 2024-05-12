@@ -43,7 +43,7 @@
                             <div class="btn btn-primary">
                                 @cs.ClassCode
                                 @Html.ActionLink("Посмотреть класс", "ViewClass", "Teacher", new { id = @cs.id })
-
+                                @Html.ActionLink("Тесты", "Tests", "Teacher", new { id = @cs.id })
                             </div>
                         </li>
                     }

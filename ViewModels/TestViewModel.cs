@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
+using Xceed.Words.NET;
 
 namespace SchoolTestsApp.ViewModels
 {
@@ -47,10 +49,18 @@ namespace SchoolTestsApp.ViewModels
             }
         }
 
-        public async Task<List<TestViewModelToShow?>> ReadFromDBAsync(int classId, ApplicationContext _context)
+        public async Task<List<TestViewModelToShow?>> ReadFromDBAsync(ApplicationContext _context, int classId = -1)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
-            var tests = await _context.Tests.Where(t => t.Class == classID).ToListAsync();
+            List<Test> tests;
+            if (classId != -1)
+            {
+                 tests = await _context.Tests.Where(t => t.Class == classID).ToListAsync();
+            }
+            else
+            {
+                 tests = await _context.Tests.ToListAsync();
+            }
 
             List<TestViewModelToShow?> result = new List<TestViewModelToShow?>();
             foreach (var t in tests)
@@ -104,6 +114,8 @@ namespace SchoolTestsApp.ViewModels
 
         public async Task WriteToDBAsync(TestModel test, int classID, ApplicationContext _context)
         {
+          
+
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
 
             using (FileStream fs = new FileStream("temp.xml", FileMode.Create))
@@ -119,7 +131,7 @@ namespace SchoolTestsApp.ViewModels
                            {
                                Title = test.Title,
                                TestFile = bytes,
-                               Class = classID
+                               Class = classID,
                            });
                 await _context.SaveChangesAsync();
             }

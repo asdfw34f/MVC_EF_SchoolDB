@@ -7,6 +7,8 @@ using SchoolTestsApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using SchoolTestsApp.Helpers;
+using System.Drawing;
+using Xceed.Words.NET;
 
 namespace SchoolTestsApp.Controllers.Test
 {
@@ -62,7 +64,9 @@ namespace SchoolTestsApp.Controllers.Test
                     test.TestModel.Questions.Add(question);
                 }
             }
-            
+
+        
+
             model.WriteToDBAsync(model.TestModel, model.classID, _context);
 
 

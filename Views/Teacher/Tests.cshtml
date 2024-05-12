@@ -1,0 +1,37 @@
+﻿@using SchoolTestsApp.Models.DB.Entities
+@using SchoolTestsApp.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Просмотр тестов";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+@model List<TestViewModelToShow>
+<div class="container bg-white p-4 mt-3">
+    <div class="card">
+        <br />
+        <div class="card-header"> 
+           Тесты в .docx формате
+        </div>
+            @if(Model.Count > 0)
+            {
+            <div class="card-body">
+
+                <ul class="list-group">
+                    @foreach (var test in Model)
+                    {
+                        <li class="list-group-item" >
+                            <div class="btn btn-info">
+                                @test.Test.Title
+                                @Html.ActionLink("Скачать", "DownloadTest", "Teacher", new { id = @test.idTest })
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+        </div>
+
+            }
+    </div>
+</div>

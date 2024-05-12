@@ -9,7 +9,6 @@ namespace SchoolTestsApp.Models.DB.Entities
         public string? Title { get; set; }
         public byte[] TestFile { get; set; }
         public int Class { get; set; }
-
         public List<HistoryTests> HistoryTests { get; set; }
     }
 }

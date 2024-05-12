@@ -32,7 +32,7 @@ namespace SchoolTestsApp.Controllers.Student
             self.HistoryTests = _context.History_Tests.Where(ht=>ht.StudentId==self.id).ToList();
             
             TestViewModel viewModel = new TestViewModel();
-            testsModel = viewModel.ReadFromDBAsync(self.ClassId, _context).Result;
+            testsModel = viewModel.ReadFromDBAsync(_context, self.ClassId).Result;
         }
 
         [Route("Student/{id?}")]

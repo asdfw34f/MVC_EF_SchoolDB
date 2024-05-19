@@ -95,7 +95,13 @@
                 foreach (var t in Model)
                 {
                     <tr>
-                        <td class="td-subject" id="row-table-td" class="cell-multi">@t.Test.Title</td>
+                        <td class="td-subject" id="row-table-td" class="cell-multi">
+                            @if (t.Test != null)
+                            {
+                                @if (!string.IsNullOrEmpty(t.Test.Title))
+                                    @t.Test.Title
+                            }
+                        </td>
                         <td id="row-table-td">@t.Mark</td>
                     </tr>
                 }

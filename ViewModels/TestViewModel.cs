@@ -49,17 +49,21 @@ namespace SchoolTestsApp.ViewModels
             }
         }
 
-        public async Task<List<TestViewModelToShow?>> ReadFromDBAsync(ApplicationContext _context, int classId = -1)
+        public async Task<List<TestViewModelToShow?>> ReadFromDBAsync(ApplicationContext _context, int classId = -1, List<int>? idsHt = null)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(TestModel));
             List<Test> tests;
+            
             if (classId != -1)
             {
                  tests = await _context.Tests.Where(t => t.Class == classID).ToListAsync();
+      
+
             }
             else
             {
                  tests = await _context.Tests.ToListAsync();
+
             }
 
             List<TestViewModelToShow?> result = new List<TestViewModelToShow?>();

@@ -1,0 +1,23 @@
+﻿@using SchoolTestsApp.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+
+    ViewData["Title"] = Model.header;
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+@model TestCompleteViewModel
+
+<div class="text-center">
+    <div class="card">
+        <div class="card-header">@Model.header</div>
+        <div class="card-body">
+            <h5 class="card-title">Оценка: @Model.mark</h5>
+            <p class="card-text">Количество правильных ответов: @Model.countRightAnswer</p>
+        </div>
+        <div class="card-footer">
+            @Html.ActionLink("На главную", "Index", "Student")
+        </div>
+    </div>
+</div>

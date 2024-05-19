@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using SchoolTestsApp.AuthenticationModule;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.ViewModels;
+using System.Collections.Generic;
 
 namespace SchoolTestsApp.Controllers.Student
 {
@@ -31,8 +32,6 @@ namespace SchoolTestsApp.Controllers.Student
             self.Class = _context.Classes.Find(self.ClassId);
             self.HistoryTests = _context.History_Tests.Where(ht=>ht.StudentId==self.id).ToList();
             
-            TestViewModel viewModel = new TestViewModel();
-            testsModel = viewModel.ReadFromDBAsync(_context, self.ClassId).Result;
         }
 
         [Route("Student/{id?}")]
@@ -48,6 +47,20 @@ namespace SchoolTestsApp.Controllers.Student
         [Authorize]
         public IActionResult ViewNewTests()
         {
+            var ht = _context.History_Tests.Where(h => h.StudentId == self.id).ToList();
+            List<int> idsHt = new List<int>();
+            foreach (var test in ht)
+            {
+                idsHt.Add(test.id);
+            }
+
+            for (int i = 0; i < testsModel.Count; i++)
+            {
+                if (idsHt.Contains(testsModel[i].idTest))
+                {
+                    testsModel.Remove(testsModel[i]);
+                }
+            }
             return View(testsModel);
         }
 
@@ -85,20 +98,20 @@ namespace SchoolTestsApp.Controllers.Student
                 proc =  countRight / show.Test.Questions.Count;
             }
             
-            int mark = 0;
+            int mark = 2;
             if (proc < 0.6)
             {
                 mark = 2;
             }
-            else if(proc < 0.65)
+            else if(proc < 0.8)
             {
                 mark = 3;
             }
-            else if (proc < 0.77)
+            else if (proc > 0.8 && proc < 0.9)
             {
                 mark = 4;
             }
-            else if (proc < 0.9)
+            else
             {
                 mark = 5;
             }
@@ -111,9 +124,17 @@ namespace SchoolTestsApp.Controllers.Student
             });
 
             await _context.SaveChangesAsync();
-
-            @ViewBag.ResultCheck ="Правильных ответов: " + countRight;
-            return View("ViewTest", show);
+            string head = "";
+            if (mark == 2)
+            {
+                head = "Вы не прошли тест";
+            }
+            else
+            {
+                head = "Тест пройден";
+            }
+            TestCompleteViewModel model = new TestCompleteViewModel() { mark = mark, header = head, countRightAnswer = Convert.ToInt32(countRight) };
+            return View("CompleteTest", model);
         }
 
         [Authorize]
@@ -121,7 +142,11 @@ namespace SchoolTestsApp.Controllers.Student
         public async Task<IActionResult> ViewDoneTests(int id)
         {
             var history = await _context.History_Tests.Where(h => h.Student.ClassId == id && h.StudentId ==Account.GetID()).ToListAsync();
-
+            for (int i =0; i < history.Count; i++)
+            {
+                var t = await _context.Tests.FindAsync(history[i].TestID);
+                history[i].Test = t;
+            }
             return View(history);
         }
     }

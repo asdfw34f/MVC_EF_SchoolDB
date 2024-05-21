@@ -67,6 +67,7 @@ app.MapControllerRoute(
     pattern: "{controller=Student}/{action=Index}/{id?}"
     );
 
+
 app.MapGet("/", async(HttpContext context) =>
 {
     return await Task.FromResult(Results.Redirect("/logout"));

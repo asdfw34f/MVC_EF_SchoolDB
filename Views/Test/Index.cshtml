@@ -11,7 +11,7 @@
 }
 
 @model TestViewModel
-    <form asp-action="AddSentence" method="post">
+    <form asp-action="AddSentence" method="post" id="form-test">
     <br />
 
         <style>
@@ -99,17 +99,15 @@
             {
                 <partial style="margin-bottom=10px;" name="_QuestionEditor" model="item" />
             }
-
-
         </div>
-        <div class="card-footer">
+        <div class="card-footer" id="footer-card">
             Для класса
             @Html.DropDownListFor(m => m.classID, new SelectList(Model.ClassList, "id", "ClassCode"))
             @ViewBag.Result
-        </div>
         <a id="addItem" asp-action="BlankSentence" class="btn btn-primary" asp-controller="Test">Добавить вопрос</a>
-    <input type="submit" class="btn btn-primary" id="submit" value="Сохранить" asp-action="AddSentence" />
-    </form>
+        <input type="submit" class="btn btn-primary" id="submit" value="Сохранить" asp-action="AddSentence" />
+
+    </div></form>
 
 @section scripts {
     <script>
@@ -155,6 +153,15 @@
                 formData.append("TestModel.Title", title);
             });
 
+            const element = document.getElementById('editorRows');
+            element.remove();
+
+            const f = document.getElementById('footer-card');
+            f.remove();
+            
+            const ft = document.getElementById('form-test');
+
+
             $.ajax({
                 method: 'post',
                 url: "Test/AddSentence",
@@ -165,6 +172,8 @@
 
                 }
             });
+            ft.insertAdjacentHTML('afterbegin', '<div class="justify-content-center"><h3> Сохраяем тест </h3><span> можете вернутся на главную страницу </span></div>');
+
         });
 
         $("#addItem").click(function () {

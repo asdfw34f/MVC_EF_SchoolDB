@@ -7,8 +7,6 @@ using SchoolTestsApp.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using SchoolTestsApp.Helpers;
-using System.Drawing;
-using Xceed.Words.NET;
 
 namespace SchoolTestsApp.Controllers.Test
 {
@@ -54,8 +52,9 @@ namespace SchoolTestsApp.Controllers.Test
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddSentence(TestViewModel model)
+        public IActionResult AddSentence(TestViewModel model)
         {
+            RedirectToAction("");
             var test = new TestViewModel() { TestModel = new TestModel() {  Questions= new List<QuestionModel>() } };
             foreach (var question in model.TestModel.Questions)
             {
@@ -65,19 +64,9 @@ namespace SchoolTestsApp.Controllers.Test
                 }
             }
 
-        
-
             model.WriteToDBAsync(model.TestModel, model.classID, _context);
+            return RedirectToRoute("Test/test-saved");
 
-
-            return View("SavedTest");
-        }
-
-        [Route("Test/success-index")]
-        [Authorize]
-        public IActionResult SavedTest()
-        {
-            return View();
         }
 
         [Authorize]

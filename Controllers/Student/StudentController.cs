@@ -31,7 +31,8 @@ namespace SchoolTestsApp.Controllers.Student
             self = _context.Students.Single(s=>s.id==Account.GetID());
             self.Class = _context.Classes.Find(self.ClassId);
             self.HistoryTests = _context.History_Tests.Where(ht=>ht.StudentId==self.id).ToList();
-            
+            TestViewModel viewModel = new TestViewModel();
+            testsModel = viewModel.ReadFromDBAsync(_context, self.ClassId).Result;
         }
 
         [Route("Student/{id?}")]
@@ -51,7 +52,7 @@ namespace SchoolTestsApp.Controllers.Student
             List<int> idsHt = new List<int>();
             foreach (var test in ht)
             {
-                idsHt.Add(test.id);
+                idsHt.Add(test.TestID);
             }
 
             for (int i = 0; i < testsModel.Count; i++)

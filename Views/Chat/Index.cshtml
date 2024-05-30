@@ -10,43 +10,53 @@
 }
 @model ChatViewModel
 <div class="container py-5">
-    <div class="card">
-        <div class="card-header">Чат с учителем</div>
-        <div class="card-body">
-            @foreach (var m in Model.Messages)
-            {
-                @if (m.isTeacher == true)
-                {
-                    <div class="row">
-                        <div class="col-6">
-                            <strong>Вы:</strong>
-                            <div class="alert alert-secondary" role="alert">
-                                   @m.Message
-                            </div>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col-6 offset-6 text-right">
-                            <strong>Учитель:</strong>   <div class="alert alert-primary" role="alert">
-                                @m.Message
-                            </div>
-                        </div>
-                    </div>
-                }
-            }
+    <style>
+        .scrollable {
+            overflow-y: auto;
+            max-height: 1000px;
+        }
+    </style>
 
-            <form class="card-footer">
-                <div class="card-text">
-                    <textarea class="form-control mb-md-4"></textarea>
-                </div>
-                <input class="btn btn-primary" type="submit" />
-            </form>
+        <div class="card">
+            <div class="card-header">Чат с учителем</div>
+            <div class="card-body">
+            <div class="scrollable">
+
+                @foreach (var m in Model.Messages)
+                {
+                    @if (m.isTeacher == true)
+                    {
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Вы:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    @m.Message
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-6 offset-6 text-right">
+                                <strong>Учитель:</strong>   <div class="alert alert-primary" role="alert">
+                                    @m.Message
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+                <form class="card-footer" asp-action="Send" method="post" asp-controller="Chat">
+                    <div class="card-text">
+                        <textarea class="form-control mb-md-4" name="messg"></textarea>
+                        <input type="text" value="@Model.ChatId" hidden name="chatID" />
+                    </div>
+                    <input class="btn btn-primary" type="submit" />
+                </form>
+            </div>
+
         </div>
-</div>
     
-   
-   
 </div>

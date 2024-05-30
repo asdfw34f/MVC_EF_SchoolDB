@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using SchoolTestsApp.AuthenticationModule;
 using SchoolTestsApp.Models.DB;
+using SchoolTestsApp.Models.DB.Entities;
 using SchoolTestsApp.ViewModels;
 
 namespace SchoolTestsApp.Controllers.Chat
@@ -37,5 +38,21 @@ namespace SchoolTestsApp.Controllers.Chat
             
             return View(model);
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> SendAsync(string messg, string chatID)
+        {
+            var m = new History_Chat();
+            m.atDate = DateTime.Now;
+            m.isTeacher = false;
+            m.Chat_id = int.Parse(chatID);
+            m.Message = messg;
+
+            await _context.History_Chats.AddAsync(m);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using SchoolTestsApp.AuthenticationModule;
 using SchoolTestsApp.Models.DB;
 using SchoolTestsApp.ViewModels;
-using System.Collections.Generic;
 
 namespace SchoolTestsApp.Controllers.Student
 {

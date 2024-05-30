@@ -16,5 +16,6 @@ namespace SchoolTestsApp.Models.DB.Entities
 
         public Class Class { get; set; }
         public List<HistoryTests> HistoryTests { get; set; }
+        public List<Chat> Chat { get; set; }
     }
 }

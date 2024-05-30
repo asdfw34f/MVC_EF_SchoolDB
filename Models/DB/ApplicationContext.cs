@@ -12,6 +12,9 @@ namespace SchoolTestsApp.Models.DB
         public DbSet<Student> Students { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<HistoryTests> History_Tests { get; set; }
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<History_Chat> History_Chats { get; set; }
+
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
@@ -53,19 +56,19 @@ namespace SchoolTestsApp.Models.DB
                 SaveChanges();
             }
             */
-            
 
 
-        /*    Teachers.AddRange(
-                new Teacher()
-                {
-                    Name = "Daniil",
-                    SecondName = "Demekhin",
-                    ThridName = "Valentinovich",
-                    Birthday = DateOnly.FromDateTime(new DateTime(2000, 10, 13)),
-                    Login="123",
-                    Password="321",
-                });*/
+
+            /*    Teachers.AddRange(
+                    new Teacher()
+                    {
+                        Name = "Daniil",
+                        SecondName = "Demekhin",
+                        ThridName = "Valentinovich",
+                        Birthday = DateOnly.FromDateTime(new DateTime(2000, 10, 13)),
+                        Login="123",
+                        Password="321",
+                    });*/
 
         }
 
@@ -113,6 +116,30 @@ namespace SchoolTestsApp.Models.DB
                 .HasForeignKey(h => h.TestID)
                 .HasPrincipalKey(t => t.id);
             });
+
+            modelBuilder.Entity<Chat>(e =>
+            {
+                e.HasKey(k => k.id);
+                e.HasOne(q => q.Students)
+                .WithMany(w => w.Chat)
+                .HasForeignKey(f => f.Student_id)
+                .HasPrincipalKey(d => d.id);
+                e.HasOne(q => q.Teacher)
+                .WithMany(w => w.Chat)
+                .HasForeignKey(f => f.Teacher_id)
+                .HasPrincipalKey(d => d.id);
+            });
+            modelBuilder.Entity<History_Chat>(e =>
+            {
+                e.HasKey(k => k.id);
+                e.HasOne(q => q.Chats)
+                .WithMany(w => w.History_Chats)
+                .HasForeignKey(r => r.Chat_id)
+                .HasPrincipalKey(t => t.id);
+
+            });
+
+
         }
     }
 }

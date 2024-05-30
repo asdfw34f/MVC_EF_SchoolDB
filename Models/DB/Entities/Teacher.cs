@@ -14,5 +14,6 @@ namespace SchoolTestsApp.Models.DB.Entities
         public string? Login { get; set; }
 
         public List<Class> Classes { get; set; }
+        public List<Chat> Chat { get; set; }
     }
 }

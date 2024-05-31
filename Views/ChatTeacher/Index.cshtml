@@ -13,7 +13,7 @@
     <style>
         .scrollable {
             overflow-y: auto;
-            max-height: 1000px;
+            max-height: 990px;
         }
     </style>
     <div class="list-group">
@@ -22,13 +22,13 @@
             @foreach (var s in Model)
             {
                 <div class="card g-md-3">
-                    <a style="text-decoration:none;" href="@Url.Action("ChatRoom", "ChatTeacher", new {@chatID = s.Chat.ChatId})">
+                    <a style="text-decoration:none; color:black;" href="@Url.Action("ChatRoom", "ChatTeacher", new {@chatID = s.Chat.ChatId})">
 
-                        <p class="card-header">@s.Student.SecondName @s.Student.Name</p>
+                        <p style="text-decoration:none;"  class="card-header">@s.Student.SecondName @s.Student.Name</p>
                         @if (@s.Chat != null && @s.Chat.Messages.Count > 0)
                         {
-                            <div class="card-body">
-                                <p class="card-text text-start"><text>@s.Chat.Messages.Last().atDate.ToString("M"): </text>@s.Chat.Messages.Last().Message</p>
+                            <div style="text-decoration:none;" class="card-body">
+                                <p style="text-decoration:none;" class="card-text text-start"><text>@s.Chat.Messages.Last().atDate.ToString("M"): </text>@s.Chat.Messages.Last().Message</p>
                             </div>
                             
                         }

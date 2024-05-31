@@ -6,7 +6,7 @@
 
     ViewData["Title"] = "Чат с учителем";
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
-    Model.Messages.Sort((x, y) => x.atDate.CompareTo(y.atDate));
+    Model.Messages.Sort((x, y) => y.atDate.CompareTo(x.atDate));
 }
 @model ChatViewModel
 <div class="container py-5">

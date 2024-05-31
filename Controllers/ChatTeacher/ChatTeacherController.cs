@@ -50,6 +50,7 @@ namespace SchoolTestsApp.Controllers.ChatTeacher
             var mess = await _context.History_Chats.Where(q => q.Chat_id == chat.id).ToListAsync();
 
             var vm = new ChatViewModel() { ChatId = chatID , TeacherId = self.id, Messages=mess, StudentId=chat.Student_id};
+            vm.Messages.Sort((x, y) => x.atDate.CompareTo(y.atDate));
 
             var m = new ChatTeacherViewModel()
             {

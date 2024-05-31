@@ -19,18 +19,26 @@
     <div class="list-group">
         <div class="scrollable">
 
-        @foreach(var s in Model)
-        {
-            <div class="card g-md-3">
-                <p class="card-header">@s.Student.SecondName @s.Student.Name</p>
-                @if(@s.Chat != null && @s.Chat.Messages.Count > 0)
-                {
-                        <div class="card-body">
-                            <p class="card-text text-start"><text>@s.Chat.Messages.Last().atDate.ToString("M"): </text>@s.Chat.Messages.Last().Message</p>
+            @foreach (var s in Model)
+            {
+                <div class="card g-md-3">
+                    <a style="text-decoration:none;" href="@Url.Action("ChatRoom", "ChatTeacher", new {@chatID = s.Chat.ChatId})">
+
+                        <p class="card-header">@s.Student.SecondName @s.Student.Name</p>
+                        @if (@s.Chat != null && @s.Chat.Messages.Count > 0)
+                        {
+                            <div class="card-body">
+                                <p class="card-text text-start"><text>@s.Chat.Messages.Last().atDate.ToString("M"): </text>@s.Chat.Messages.Last().Message</p>
                             </div>
-                }else {
-                        <div class="card-body  text-start">Открыть диалог</div>
-                }
+                            
+                        }
+                        else
+                        {
+                            <div class="card-body  text-start">Открыть диалог</div>
+                        }
+                    </a>
+
+                
             </div>
         }
         </div>

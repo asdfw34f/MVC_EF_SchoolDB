@@ -53,6 +53,5 @@ namespace SchoolTestsApp.Controllers.Chat
 
             return RedirectToAction("Index");
         }
-
     }
 }

@@ -1,0 +1,60 @@
+﻿@using SchoolTestsApp.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Диалоги";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+@model ChatTeacherViewModel
+<div class="container py-5">
+    <style>
+        .scrollable {
+            overflow-y: auto;
+            max-height: 1000px;
+        }
+    </style>
+
+    <div class="card">
+        <div class="card-header">@Model.Student.SecondName @Model.Student.Name</div>
+        <div class="card-body">
+            <div class="scrollable">
+
+                @foreach (var m in Model.Chat.Messages)
+                {
+                    @if (m.isTeacher == false)
+                    {
+                        <div class="row">
+                            <div class="col-6">
+                                <strong>Ученик:</strong>
+                                <div class="alert alert-secondary" role="alert">
+                                    @m.Message
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-6 offset-6 text-right">
+                                <strong>Вы:</strong>   <div class="alert alert-primary" role="alert">
+                                    @m.Message
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+
+            <form class="card-footer" asp-controller="ChatTeacher" asp-action="Send" method="post">
+                <div class="card-text">
+                    <textarea class="form-control mb-md-4" name="messg"></textarea>
+                    <input type="text" value="@Model.Chat.ChatId" hidden name="chatID" />
+                </div>
+                <input class="btn btn-primary" type="submit" />
+            </form>
+        </div>
+    </div>
+    <script>
+    </script>
+</div>

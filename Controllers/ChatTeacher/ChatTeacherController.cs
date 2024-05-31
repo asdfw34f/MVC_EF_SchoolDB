@@ -27,6 +27,38 @@ namespace SchoolTestsApp.Controllers.ChatTeacher
             self = _context.Teachers.Single(s => s.id == Account.GetID());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SendAsync(string messg, string chatID)
+        {
+            var m = new History_Chat();
+            m.atDate = DateTime.Now;
+            m.isTeacher = true;
+            m.Chat_id = int.Parse(chatID);
+            m.Message = messg;
+
+            await _context.History_Chats.AddAsync(m);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("ChatRoom", new {chatID=m.Chat_id});
+        }
+
+        public async Task<IActionResult> ChatRoomAsync(int chatID)
+        {
+
+            var chat = await _context.Chats.Where(q => q.id == chatID).SingleAsync();
+           
+            var mess = await _context.History_Chats.Where(q => q.Chat_id == chat.id).ToListAsync();
+
+            var vm = new ChatViewModel() { ChatId = chatID , TeacherId = self.id, Messages=mess, StudentId=chat.Student_id};
+
+            var m = new ChatTeacherViewModel()
+            {
+                Student = await _context.Students.FindAsync(chat.Student_id),
+                Chat = vm
+            };
+
+            return View(m);
+        }
 
         public async Task<IActionResult> IndexAsync()
         {

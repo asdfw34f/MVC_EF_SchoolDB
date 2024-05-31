@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using SchoolTestsApp.ViewModels
+@{
+
+    ViewData["Title"] = "Диалоги";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+@model List<ChatTeacherViewModel>
+
+<div class="container">
+    <style>
+        .scrollable {
+            overflow-y: auto;
+            max-height: 1000px;
+        }
+    </style>
+    <div class="list-group">
+        <div class="scrollable">
+
+        @foreach(var s in Model)
+        {
+            <div class="card g-md-3">
+                <p class="card-header">@s.Student.SecondName @s.Student.Name</p>
+                @if(@s.Chat != null && @s.Chat.Messages.Count > 0)
+                {
+                        <div class="card-body">
+                            <p class="card-text text-start"><text>@s.Chat.Messages.Last().atDate.ToString("M"): </text>@s.Chat.Messages.Last().Message</p>
+                            </div>
+                }else {
+                        <div class="card-body  text-start">Открыть диалог</div>
+                }
+            </div>
+        }
+        </div>
+
+    </div>
+</div>
